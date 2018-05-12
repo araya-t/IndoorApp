@@ -3,9 +3,14 @@ package com.estimote.indoorapp
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
+import android.hardware.SensorEvent
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.estimote.indoorsdk.IndoorLocationManagerBuilder
@@ -15,6 +20,12 @@ import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
 import com.estimote.indoorsdk_module.view.IndoorLocationView
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+import java.nio.Buffer
+import java.text.DecimalFormat
 import java.util.function.Consumer
 
 /**
@@ -22,6 +33,11 @@ import java.util.function.Consumer
  */
 
 class MainActivity : AppCompatActivity() {
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
 
     private lateinit var indoorLocationView: IndoorLocationView
     private lateinit var indoorLocationManager: ScanningIndoorLocationManager
@@ -30,9 +46,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvPositionXY: TextView
     private lateinit var onPositionUpdateListener: OnPositionUpdateListener
     private lateinit var locaPo: LocationPosition
-    private var listLoca = ArrayList<LocationPosition>()
-//    val list = ArrayList<String>()
-
+    private var listLocationPosition = ArrayList<LocationPosition>()
+    private lateinit var file: BufferedWriter
+    private var dcm = DecimalFormat("0.0000")
+    private lateinit var beaconFileWriter: com.estimote.indoorapp.BeaconFileWriter
+    lateinit var btnStart: Button
+    lateinit var btnStop: Button
+    var isStartRecording = false
 
 
     companion object {
@@ -60,15 +80,13 @@ class MainActivity : AppCompatActivity() {
         // Get location id from intent and get location object from list of locations
         setupLocation()
 
-        // ------ Init tvPositionXY
+        initInstances()
 
-        tvPositionXY = findViewById(R.id.tvPositionXY)
+        beaconFileWriter.startRecording()
+        isStartRecording = true;
 
-        // Init indoor location view here
-        indoorLocationView = findViewById(R.id.indoor_view)
-
-        // Give location object to your view to draw it on your screen
-        indoorLocationView.setLocation(location)
+//        btnStart.setOnClickListener(this)
+//        btnStop.setOnClickListener(this)
 
         // Create IndoorManager object.
         // Long story short - it takes list of scanned beacons, does the magic and returns estimated position (x,y)
@@ -83,12 +101,12 @@ class MainActivity : AppCompatActivity() {
 
         // Hook the listener for position update events
 
+        fun saveData(locationPosition: LocationPosition) {
+            listLocationPosition.add(locationPosition)
+//            Log.i("Position", "LocaPo x = " + locaPo.x + " , y = " + locaPo.y)
+            println("In save data--> list Loca size = " + listLocationPosition.size)
+//            tvPositionXY.setText("X:" + locationPosition.x + "  Y:" + locationPosition.y)
 
-        fun saveData(locaPo: LocationPosition){
-            this.locaPo = locaPo
-            listLoca.add(this.locaPo)
-            Log.i("Position", "LocaPo x = " + locaPo.x + " , y = " + locaPo.y)
-            println("In save data--> list Loca size = " + listLoca.size)
         }
 
         onPositionUpdateListener = object : OnPositionUpdateListener {
@@ -97,11 +115,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPositionUpdate(locationPosition: LocationPosition) {
-                saveData(locationPosition)
+                if (isStartRecording) {
+                    saveData(locationPosition)
+                }
+                beaconFileWriter.writeBeaconDataEachLine(locationPosition)
                 indoorLocationView.updatePosition(locationPosition)
-//                Log.i("Position", "x = " + locationPosition.x + " , y = " + locationPosition.y)
+                Log.i("Position", "x = " + locationPosition.x + " , y = " + locationPosition.y)
+//                println("Printttt x = " + locationPosition.x + " , y = " + locationPosition.y)
 //                Log.i("Position", "LocaPo x = " + locaPo.x + " , y = " + locaPo.y)
-//                tvPositionXY.setText("X:" + locaPo.x + "  Y:" + locaPo.y)
+//                tvPositionXY.setText("X:" + locationPosition.x + "  Y:" + locationPosition.y)
             }
         }
 
@@ -125,6 +147,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun initInstances() {
+        // ------ Init tvPositionXY
+//            tvPositionXY = findViewById(R.id.tvPositionXY)
+
+        // Init indoor location view here
+        indoorLocationView = findViewById(R.id.indoor_view)
+
+        // Give location object to your view to draw it on your screen
+        indoorLocationView.setLocation(location)
+
+        beaconFileWriter = BeaconFileWriter()
+
+//        btnStart = findViewById(R.id.btnStart)
+//        btnStop = findViewById(R.id.btnStop)
+    }
+
     private fun setupLocation() {
         // get id of location to show from intent
         val locationId = intent.extras.getString(intentKeyLocationId)
@@ -138,39 +176,40 @@ class MainActivity : AppCompatActivity() {
         return Location("", "", true, "", 0.0, emptyList(), emptyList(), emptyList())
     }
 
-
-    override fun onDestroy() {
-        indoorLocationManager.stopPositioning()
-        super.onDestroy()
-    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//    }
-
     override fun onPause() {
+        indoorLocationManager.stopPositioning()
+        beaconFileWriter.stopRecording()
+        isStartRecording = false;
+
         super.onPause()
 
         var i = 0;
-        for (item in listLoca) {
-            i = i+1
-            print("From(size:"+listLoca.size +") i=" + i + "--> x:" + item.x + " y:" + item.y + "\n")
+        for (item in listLocationPosition) {
+            i = i + 1
+            print("From(size:" + listLocationPosition.size + ") i=" + i + "--> x:" + item.x + " y:" + item.y + "\n")
         }
     }
 
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        // save everything in here
+    override fun onDestroy() {
+        super.onDestroy()
+        beaconFileWriter.stopRecording()
+        isStartRecording = false;
 
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        // restore everything in here
-    }
+//    override fun onClick(view: View) {
+//        when (view.id) {
+//            R.id.btnStart -> {
+//                beaconFileWriter.startRecording()
+//                isStartRecording = true
+//                Toast.makeText(this, "Start recording", Toast.LENGTH_SHORT).show()
+//            }
+//            R.id.btnStop -> {
+//                beaconFileWriter.stopRecording()
+//                Toast.makeText(this, "Stop recording", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+
+
 }

@@ -7,36 +7,59 @@
     android:orientation="vertical"
     tools:context="com.estimote.indoorapp.MainActivity">
 
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@color/background_white"-->
+        <!--android:gravity="bottom|center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/tvPositionXY"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginTop="16dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginRight="35dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:paddingLeft="20dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="X: , Y:" />&ndash;&gt;-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/btnStart"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="40dp"-->
+                <!--android:text="Start" />-->
+
+            <!--<Button-->
+                <!--android:id="@+id/btnStop"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Stop" />-->
+
+        <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/background_white"
-        android:gravity="bottom|center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvPositionXY"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="35dp"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:paddingLeft="20dp"
-            android:text="X: , Y:" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.estimote.indoorsdk_module.view.IndoorLocationView
             android:id="@+id/indoor_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_green" />
-
     </LinearLayout>
+
+
 
 
 </LinearLayout>
