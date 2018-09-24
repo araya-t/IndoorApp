@@ -44,6 +44,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51"
-
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 }
 
