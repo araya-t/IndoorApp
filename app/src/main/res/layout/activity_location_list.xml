@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_white"
-    tools:context="com.estimote.indoorapp.LocationListActivity">
+    tools:context=".Controller.IndoorLocation.LocationListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"

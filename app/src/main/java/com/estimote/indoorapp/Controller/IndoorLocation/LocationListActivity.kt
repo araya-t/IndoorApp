@@ -1,4 +1,4 @@
-package com.estimote.indoorapp
+package com.estimote.indoorapp.Controller.IndoorLocation
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,12 +6,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
+import com.estimote.indoorapp.Model.IndoorLocation.LocationListAdapter
+import com.estimote.indoorapp.R
 import com.estimote.indoorsdk_module.cloud.Location
 
 /**
  * This is a simple activity to display all locations in list view.
  * You can modify it freely :)
  */
+
 class LocationListActivity : AppCompatActivity() {
 
     private lateinit var mRecyclerView: RecyclerView
@@ -25,10 +29,12 @@ class LocationListActivity : AppCompatActivity() {
         mNoLocationsView = findViewById(R.id.no_locations_view)
         mRecyclerView = findViewById(R.id.my_recycler_view)
         mRecyclerView.setHasFixedSize(true)
-        mLayoutManager = LinearLayoutManager(this)
+        mLayoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager
         mRecyclerView.layoutManager = mLayoutManager
         mAdapter = LocationListAdapter(emptyList<Location>())
         mRecyclerView.adapter = (mAdapter)
+
+        /** if click at Location will start MainActivity **/
         mAdapter.setOnClickListener { locationId ->
             startActivity(MainActivity.createIntent(this, locationId))
         }
@@ -36,12 +42,12 @@ class LocationListActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val locations = (application as IndoorApplication).locationsById.values.toList()
+        val locations = (application as BeaconApplication).locationsById.values.toList()
         if (locations.isEmpty()) {
             mNoLocationsView.visibility = View.VISIBLE
             mRecyclerView.visibility = View.GONE
         } else {
-            mAdapter.setLocations((application as IndoorApplication).locationsById.values.toList())
+            mAdapter.setLocations((application as BeaconApplication).locationsById.values.toList())
         }
     }
 }

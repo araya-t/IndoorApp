@@ -14,7 +14,7 @@
     <color name="dark_green">#597C66</color>
     <color name="background_white">#EFEFF4</color>
     <color name="background_list">#FAFAFA</color>
+    <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
     <color name="black_overlay">#66000000</color>
 </resources>

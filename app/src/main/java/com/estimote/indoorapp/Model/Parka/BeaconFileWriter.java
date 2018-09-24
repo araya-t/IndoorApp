@@ -1,4 +1,4 @@
-package com.estimote.indoorapp;
+package com.estimote.indoorapp.Model.Parka;
 
 
 import android.location.Location;
