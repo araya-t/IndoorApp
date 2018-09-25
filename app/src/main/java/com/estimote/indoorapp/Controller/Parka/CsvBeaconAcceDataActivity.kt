@@ -1,9 +1,5 @@
 package com.estimote.indoorapp.Controller.Parka
 
-import kotlinx.android.synthetic.main.activity_csv_beacon_acce_data.*
-import kotlinx.android.synthetic.main.layout_accelerometer_data.*
-import kotlinx.android.synthetic.main.layout_start_stop_button.*
-import kotlinx.android.synthetic.main.layout_stop_engine_button.*
 import android.app.Notification
 import android.content.Context
 import android.content.Intent
@@ -19,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
 import com.estimote.indoorapp.Model.Parka.CsvReader
+import com.estimote.indoorapp.Model.Parka.CsvRow
 import com.estimote.indoorapp.Model.Parka.CsvWriter
 import com.estimote.indoorapp.R
 import com.estimote.indoorapp.View.AccelerometerDataViewGroup
@@ -30,8 +27,6 @@ import com.estimote.indoorsdk_module.algorithm.ScanningIndoorLocationManager
 import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -94,22 +89,6 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build()
         //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        // Init token from FCM
-        FirebaseInstanceId.getInstance().instanceId
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.w("TAG", "getInstanceId failed", task.exception)
-                        Toast.makeText(this@CsvBeaconAcceDataActivity, "getInstanceId failed: " + task.exception!!, Toast.LENGTH_LONG).show()
-                        return@OnCompleteListener
-                    }
-
-                    //Get new instance ID token
-                    val token = task.result.token
-                    Toast.makeText(this@CsvBeaconAcceDataActivity, "getInstanceId Token: $token", Toast.LENGTH_LONG).show()
-                    Log.d("TAG-------------", "token: $token")
-
-                })
 
         setupLocation()
         initInstances()
@@ -302,11 +281,11 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
-/** -------------- Start , Stop recording ------------------------------------------------------ **/
+/** -------------- Start recording ------------------------------------------------------ **/
     private fun startRecording() {
         // Prepare title data of file
         val now = Date(System.currentTimeMillis())
-        fileName = "AccelerometerData_" + sdf.format(now) +
+        fileName = "BeaconAccelerometerData" + sdf.format(now) +
                         "_sampling_" + listenerSampling +
                         "microsec.csv"
         val directory = Environment.getExternalStorageDirectory().toString() +
@@ -315,11 +294,11 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         csvWriter.createFile(fileName, directory)
         startTime = csvWriter.startTime
 
-        val headFileStr = ("Millisec" + "," + "TimeStamp" + ","
-                            + "Acce X" + "," + "Acce Y" + "," + "Acce Z" + ","
-                            + "Stop engine" + ","
-                            + "position_x" + ","
-                            + "position_y" + ","
+        val headFileStr = ("millisec" + "," + "timeStamp" + ","
+                            + "acce_X" + "," + "acce_Y" + "," + "acce_Z" + ","
+                            + "is_stop_engine" + ","
+                            + "x_position" + ","
+                            + "y_position" + ","
                             + "\n")
         csvWriter.writeHeadFile(headFileStr)
 
@@ -328,6 +307,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                 + "file name = " + fileName, Toast.LENGTH_SHORT).show()
     }
 
+/** -------------- Stop recording -------------------------------------------------------- **/
     private fun stopRecording() {
         unregisterListener()
 
@@ -337,29 +317,29 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         }
 
         if (isReadFinish != true) {
-            var rows: MutableList<Array<String>> = ArrayList()
+            var csvRows: MutableList<CsvRow> = ArrayList()
             try {
                 if (fileName != null) {
-                    rows = csvReader.readCSV(fileName)
+                    csvRows = csvReader.readCSV(fileName)
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
 
-            if (rows.size != 0) {
+            if (csvRows.size != 0) {
                 var i = 0
-                while (i < rows.size) {
+                while (i < csvRows.size) {
                     Log.d("read from csv file",
                             String.format("row %s: %s, %s, %s, %s, %s, %s, %s ,%s",
-                                    i + 1, rows[i][0], rows[i][1], rows[i][2]
-                                    , rows[i][3], rows[i][4], rows[i][5]
-                                    , rows[i][6], rows[i][7]))
+                                    i + 1, csvRows[i].millisec, csvRows[i].timeStamp, csvRows[i].acce_x
+                                    , csvRows[i].acce_y, csvRows[i].acce_z, csvRows[i].is_stop_engine
+                                    , csvRows[i].x_position, csvRows[i].y_position))
                     i++
                 }
 
-                if (i == rows.size) {
+                if (i == csvRows.size) {
                     isReadFinish = true
-                    rows.clear()
+                    csvRows.clear()
                 }
             }
         }
