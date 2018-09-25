@@ -13,15 +13,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class CsvReader {
-    private List<String[]> rows;
     private List<CsvRow> csvRows;
     private String fileDirectory = "BeaconSensorCsvFile"; //default directory
     SimpleDateFormat sdfTimeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS");
+    private int countRow = 0;
 
 
     public CsvReader() {
-        rows = new ArrayList<>();
         csvRows = new ArrayList<>();
     }
 
@@ -49,7 +49,7 @@ public class CsvReader {
             String x_position = row[6];
             String y_position = row[7];
 
-            CsvRow csvRow = new CsvRow(millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,
+            CsvRow csvRow = new CsvRow(++countRow,millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,
                     is_stop_engine,x_position,y_position);
 
             csvRows.add(csvRow);
@@ -84,7 +84,7 @@ public class CsvReader {
             String x_position = row[6];
             String y_position = row[7];
 
-            CsvRow csvRow = new CsvRow(millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,
+            CsvRow csvRow = new CsvRow(++countRow,millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,
                     is_stop_engine,x_position,y_position);
 
             csvRows.add(csvRow);
@@ -95,12 +95,12 @@ public class CsvReader {
         return csvRows;
     }
 
-    public String getFileDirectory(String directory){
+    public static String getFileDirectory(String directory){
         String fileDirectory = Environment.getExternalStorageDirectory() + "/_Parka/" + directory;
         return fileDirectory;
     }
 
-    public BufferedReader getBufferedReader(File fileToGet){
+    public static BufferedReader getBufferedReader(File fileToGet){
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(fileToGet));
@@ -109,10 +109,6 @@ public class CsvReader {
         }
 
         return bufferedReader;
-    }
-
-    public List<String[]> getRows(){
-        return rows;
     }
 
     public List<CsvRow> getCsvRows(){
