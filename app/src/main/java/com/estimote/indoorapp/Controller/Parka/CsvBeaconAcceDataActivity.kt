@@ -285,7 +285,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private fun startRecording() {
         // Prepare title data of file
         val now = Date(System.currentTimeMillis())
-        fileName = "BeaconAccelerometerData" + sdf.format(now) +
+        fileName = "BeaconAccelerometerData_" + sdf.format(now) +
                         "_sampling_" + listenerSampling +
                         "microsec.csv"
         val directory = Environment.getExternalStorageDirectory().toString() +
