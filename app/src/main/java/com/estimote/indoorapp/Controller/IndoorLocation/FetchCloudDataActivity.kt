@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Window
 import android.widget.Toast
-import com.estimote.indoorapp.Controller.Parka.CsvBeaconAcceDataActivity
+
 import com.estimote.indoorapp.Controller.Parka.MainMenuActivity
 import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
 import com.estimote.indoorapp.R
@@ -14,6 +14,7 @@ import com.estimote.indoorsdk_module.cloud.CloudCallback
 import com.estimote.indoorsdk_module.cloud.EstimoteCloudException
 import com.estimote.indoorsdk_module.cloud.IndoorCloudManagerFactory
 import com.estimote.indoorsdk_module.cloud.Location
+
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 

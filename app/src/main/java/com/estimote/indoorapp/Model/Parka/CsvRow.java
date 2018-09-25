@@ -1,9 +1,11 @@
 package com.estimote.indoorapp.Model.Parka;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.Date;
 
-public class CsvRow {
+public class CsvRow implements Parcelable {
+    private int countRow;
     private long millisec;
     private String timeStamp;
     private long timeStampLong;
@@ -18,10 +20,10 @@ public class CsvRow {
 
     }
 
-    public CsvRow( String millisec, String timeStamp, long timeStamplong,
+    public CsvRow( int countRow, String millisec, String timeStamp, long timeStamplong,
                    String acce_x, String acce_y, String acce_z,
                    String is_stop_engine, String x_position, String y_position){
-
+        this.countRow = countRow;
         this.millisec = Long.parseLong(millisec);
         this.timeStamp = timeStamp;
         this.timeStampLong = timeStamplong;
@@ -31,6 +33,39 @@ public class CsvRow {
         this.is_stop_engine = Boolean.parseBoolean(is_stop_engine);
         this.x_position = Double.parseDouble(x_position);
         this.y_position = Double.parseDouble(y_position);
+    }
+
+    protected CsvRow(Parcel in) {
+        countRow = in.readInt();
+        millisec = in.readLong();
+        timeStamp = in.readString();
+        timeStampLong = in.readLong();
+        acce_x = in.readDouble();
+        acce_y = in.readDouble();
+        acce_z = in.readDouble();
+        is_stop_engine = in.readByte() != 0;
+        x_position = in.readDouble();
+        y_position = in.readDouble();
+    }
+
+    public static final Creator<CsvRow> CREATOR = new Creator<CsvRow>() {
+        @Override
+        public CsvRow createFromParcel(Parcel in) {
+            return new CsvRow(in);
+        }
+
+        @Override
+        public CsvRow[] newArray(int size) {
+            return new CsvRow[size];
+        }
+    };
+
+    public int getCountRow(){
+        return countRow;
+    }
+
+    public void setCountRow(int countRow){
+        this.countRow = countRow;
     }
 
     public long getMillisec() {
@@ -108,8 +143,10 @@ public class CsvRow {
     @Override
     public String toString() {
         return "CsvRow{" +
-                "millisec=" + millisec +
+                "countRow=" + countRow +
+                ", millisec=" + millisec +
                 ", timeStamp=" + timeStamp +
+                ", timeStampLong=" + timeStampLong +
                 ", acce_x=" + acce_x +
                 ", acce_y=" + acce_y +
                 ", acce_z=" + acce_z +
@@ -117,5 +154,41 @@ public class CsvRow {
                 ", x_position=" + x_position +
                 ", y_position=" + y_position +
                 '}';
+    }
+
+    /**
+     * Describe the kinds of special objects contained in this Parcelable
+     * instance's marshaled representation. For example, if the object will
+     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
+     * the return value of this method must include the
+     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
+     *
+     * @return a bitmask indicating the set of special object types marshaled
+     * by this Parcelable object instance.
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(countRow);
+        dest.writeLong(millisec);
+        dest.writeString(timeStamp);
+        dest.writeLong(timeStampLong);
+        dest.writeDouble(acce_x);
+        dest.writeDouble(acce_y);
+        dest.writeDouble(acce_z);
+        dest.writeByte((byte) (is_stop_engine ? 1 : 0));
+        dest.writeDouble(x_position);
+        dest.writeDouble(y_position);
     }
 }
