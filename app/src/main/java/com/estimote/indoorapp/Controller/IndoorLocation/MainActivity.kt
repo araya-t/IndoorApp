@@ -26,6 +26,10 @@ import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
 import com.estimote.indoorsdk_module.view.IndoorLocationView
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
@@ -179,7 +183,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initInstances() {
-
         // Init indoor location view here
         indoorLocationView = findViewById(R.id.indoor_view)
 

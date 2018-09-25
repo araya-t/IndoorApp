@@ -30,6 +30,8 @@ import com.estimote.indoorsdk_module.algorithm.ScanningIndoorLocationManager
 import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -92,6 +94,22 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build()
         //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        // Init token from FCM
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w("TAG", "getInstanceId failed", task.exception)
+                        Toast.makeText(this@CsvBeaconAcceDataActivity, "getInstanceId failed: " + task.exception!!, Toast.LENGTH_LONG).show()
+                        return@OnCompleteListener
+                    }
+
+                    //Get new instance ID token
+                    val token = task.result.token
+                    Toast.makeText(this@CsvBeaconAcceDataActivity, "getInstanceId Token: $token", Toast.LENGTH_LONG).show()
+                    Log.d("TAG-------------", "token: $token")
+
+                })
 
         setupLocation()
         initInstances()
