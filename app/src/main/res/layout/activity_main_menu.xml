@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.estimote.indoorapp.Controller.Parka.MainMenuActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnBeaconAcceCsv"
+            android:layout_width="250dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:text="@string/btn_beacon_acc_csv"/>
+
+        <Button
+            android:id="@+id/btnReadFileSendData"
+            android:layout_width="250dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:text="@string/btn_read_send_data"/>
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
