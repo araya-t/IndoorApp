@@ -13,6 +13,7 @@ import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+
 import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
 import com.estimote.indoorapp.Model.Parka.CsvReader
 import com.estimote.indoorapp.Model.Parka.CsvRow
@@ -27,6 +28,7 @@ import com.estimote.indoorsdk_module.algorithm.ScanningIndoorLocationManager
 import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
+
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -120,13 +122,15 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
 
             override fun onPositionUpdate(locationPosition: LocationPosition) {
                 /** code for updateing view**/
-                println(" ================================================= in onPositionUpdate =====================================")
+//                println(" ================================================= in onPositionUpdate =====================================")
 //                indoorLocationView.updatePosition(locationPosition)
 //                locationPos = locationPosition
                 locationPosition_x = locationPosition.x.toString()
                 locationPosition_y = locationPosition.y.toString()
 
-                Log.i("Position", "("+ num++ +") x = " + locationPosition.x + " , y = " + locationPosition.y)
+//                Log.i("Position",
+//                        "(" + num++ + ") timestamp(" + System.currentTimeMillis()
+//                                + ")x = " + locationPosition.x + " , y = " + locationPosition.y)
             }
         }
 
@@ -288,6 +292,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         fileName = "BeaconAccelerometerData_" + sdf.format(now) +
                         "_sampling_" + listenerSampling +
                         "microsec.csv"
+        println("File name = "+fileName)
         val directory = Environment.getExternalStorageDirectory().toString() +
                             "/_Parka/BeaconSensorCsvFile"
 
@@ -330,8 +335,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                 var i = 0
                 while (i < csvRows.size) {
                     Log.d("read from csv file",
-                            String.format("row %s: %s, %s, %s, %s, %s, %s, %s ,%s",
-                                    i + 1, csvRows[i].millisec, csvRows[i].timeStamp, csvRows[i].acce_x
+                            String.format("row %s|%s: %s, %s, %s, %s, %s, %s, %s ,%s",
+                                    i + 1, csvRows[i].countRow, csvRows[i].millisec, csvRows[i].timeStamp, csvRows[i].acce_x
                                     , csvRows[i].acce_y, csvRows[i].acce_z, csvRows[i].is_stop_engine
                                     , csvRows[i].x_position, csvRows[i].y_position))
                     i++

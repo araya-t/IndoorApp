@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-public class StartStopButtonViewGroup extends FrameLayout {
+public class StartStopButtonViewGroup extends BaseCustomViewGroup {
     private Button btnStartRecord;
     private Button btnStopRecord;
 

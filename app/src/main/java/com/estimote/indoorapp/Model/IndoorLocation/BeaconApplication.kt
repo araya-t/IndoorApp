@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import com.estimote.cloud_plugin.common.EstimoteCloudCredentials
+import com.estimote.indoorapp.Manager.Contextor
 import com.estimote.indoorsdk_module.cloud.Location
 
 /**
@@ -24,7 +25,12 @@ class BeaconApplication : Application() {
     // your Estimote Cloud Account - go to https://cloud.estimote.com/ and create one :)
     val cloudCredentials = EstimoteCloudCredentials("create-parking-lot-model-4db", "c5b573016d1c2efc424b5aca8b0951aa")
 
+    override fun onCreate() {
+        super.onCreate()
 
+        //Initialize thing(s) here
+        Contextor.getInstance().init(applicationContext)
+    }
     override fun onTerminate() {
         super.onTerminate()
     }

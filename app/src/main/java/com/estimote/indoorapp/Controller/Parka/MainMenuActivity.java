@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.estimote.indoorapp.R;
 
+
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnBeaconAcceCsv;
     private Button btnReadFileSendData;
