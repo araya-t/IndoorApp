@@ -1,17 +1,21 @@
 package com.estimote.indoorapp.Controller.IndoorLocation
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Window
 import android.widget.Toast
 import com.estimote.indoorapp.Controller.Parka.CsvBeaconAcceDataActivity
+import com.estimote.indoorapp.Controller.Parka.MainMenuActivity
 import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
 import com.estimote.indoorapp.R
 import com.estimote.indoorsdk_module.cloud.CloudCallback
 import com.estimote.indoorsdk_module.cloud.EstimoteCloudException
 import com.estimote.indoorsdk_module.cloud.IndoorCloudManagerFactory
 import com.estimote.indoorsdk_module.cloud.Location
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 
 /**
  * Simple splash screen to load the data from cloud.
@@ -27,8 +31,24 @@ class FetchCloudDataActivity : AppCompatActivity() {
         // Make actionbar invisible.
         window.requestFeature(Window.FEATURE_ACTION_BAR)
         supportActionBar?.hide()
-//        setContentView(R.layout.activity_fetch_cloud_data)
+
         setContentView(R.layout.activity_fetch_cloud_data)
+
+/** ------------ Init token from FCM ----------------------------- **/
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w("TAG token failed", "getInstanceId failed", task.exception)
+                        Toast.makeText(this@FetchCloudDataActivity, "getInstanceId failed: " + task.exception!!, Toast.LENGTH_LONG).show()
+                        return@OnCompleteListener
+                    }
+
+                    //Get new instance ID token
+                    val token = task.result.token
+                    Toast.makeText(this@FetchCloudDataActivity, "getInstanceId Token: $token", Toast.LENGTH_LONG).show()
+                    Log.d("TAG token-------------", "token: $token")
+
+                })
 
         // Create object for communicating with Estimote cloud.
         // IMPORTANT - you need to put here your Estimote Cloud credentials.
@@ -61,8 +81,9 @@ class FetchCloudDataActivity : AppCompatActivity() {
 
     private fun startActivity(){
 //        startActivity(Intent(this, LocationListActivity::class.java))
-        var locationId = "six-slots-only--floor-10b"
-        startActivity(CsvBeaconAcceDataActivity.createIntent(this, locationId))
+//        var locationId = "six-slots-only--floor-10b"
+
+        startActivity(Intent(this,MainMenuActivity::class.java))
     }
 
 }
