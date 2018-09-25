@@ -8,9 +8,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-feature android:name="android.hardware.bluetooth" />
-
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
@@ -21,7 +21,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".Controller.IndoorLocation.MainActivity" />
         <activity
             android:name=".Controller.IndoorLocation.FetchCloudDataActivity"
@@ -34,17 +33,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controller.IndoorLocation.LocationListActivity" />
+        <activity android:name=".Controller.Parka.CsvBeaconAcceDataActivity" />
 
-        <activity android:name=".Controller.Parka.CsvBeaconAcceDataActivity"></activity>
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <activity android:name=".Controller.Parka.MainMenuActivity" />
-        <activity android:name=".Controller.Parka.ReadFileSendDataActivity"></activity>
+        <activity android:name=".Controller.Parka.ReadFileSendDataActivity" />
+        <activity android:name=".Controller.Parka.ShowCsvDataActivity"></activity>
     </application>
 
 </manifest>
