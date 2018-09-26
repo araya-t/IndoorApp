@@ -45,8 +45,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("users/car/{token}/")
     Call<CarPosition> sendXYPosition(@Path("token") String token,
-                                     @Field("x") double x,
-                                     @Field("y") double y,
+                                     @Field("x") double x_position,
+                                     @Field("y") double y_position,
                                      @Field("floor_id") int floorId,
                                      @Field("fcm_token") String fcmToken,
                                      @Field("timestamp_stop_engine") long time);

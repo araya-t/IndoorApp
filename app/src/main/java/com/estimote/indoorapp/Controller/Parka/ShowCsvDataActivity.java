@@ -15,6 +15,7 @@ import com.estimote.indoorapp.Model.dao.CarPosition;
 import com.estimote.indoorapp.Model.dao.Token;
 import com.estimote.indoorapp.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,6 +31,7 @@ public class ShowCsvDataActivity extends AppCompatActivity {
     boolean is_triggered = false;
     boolean is_stop_engine = false;
     int floor_id = 5018;
+    DecimalFormat dcm = new DecimalFormat("0.000000");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,32 +123,26 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                     Log.d("sendDataToAppServer","-----------------------------------------");
 
                     String  userToken = "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU";
-                    String  fcmToken = "ewkFEokjQuM:APA91bGwWl1tOinsGr44K7YaLbA0mMY84fYxVYvQAtaHH-LsP-nG5mSmXbRR6c12qsmvyDTZndh0Pqub3G_wR4z_CXX5i_lE_Zq7-mYfz8yZEaR7rO9yzViQBUCY42-AlZNmjwSkRaht";
+                    String  fcmToken = "eCY8Rx4iA4U:APA91bELzl7MWVm6uanqjcSnxS5uUeoNuTmLSeetSof3Wkp3E60KorFuQO8QZ0iOLIflfBUzCTyI_7zEOqsuDZCczdL_el3u4n0Xx2FqhZ4gwZ-ylFiiDm63RP20OO1cfpArGaQvcVQo";
                     long timestampLong1000 = csvRows.get(i).getTimeStampLong() / 1000L;
+                    double timestampDouble = Double.parseDouble(""+timestampLong1000);
                     double x_position = csvRows.get(i).getX_position();
-                    double y_position = csvRows.get(i).getY_position();
+                    String x_positionStr = dcm.format(x_position);
+                    double x_positionDouble = Double.parseDouble(x_positionStr);
 
-//                    String userToken = "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU";
-//                    String fcmToken = "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm";
-//                    long timestampLong1000 = csvRows.get(i).getTimeStampLong() / 1000L;
-//                    String timestampLong1000Str = ""+timestampLong1000;
-//                    String x_position = ""+csvRows.get(i).getX_position();
-//                    String y_position = ""+csvRows.get(i).getY_position();
-//                    String floorIdStr = "" + floor_id;
+                    double y_position = csvRows.get(i).getY_position();
+                    String y_positionStr = dcm.format(y_position);
+                    double y_positionDouble = Double.parseDouble(y_positionStr);
+
+
+//                    float x_position = Float.parseFloat(""+csvRows.get(i).getX_position());
+//                    float y_position = Float.parseFloat(""+csvRows.get(i).getY_position());
 
                     Log.d("sendDataToAppServer","timestampLong1000 = " + timestampLong1000
                                                     + ", x_position = " + x_position
-                                                    + ", y_position = " + x_position);
+                                                    + ", y_position = " + y_position);
 
                     //set data to send
-//                    Call<CarPosition> callParka = HttpManager.getInstance()
-//                                    .getServiceParka().sendXYPosition
-//                                             (userToken
-//                                            , fcmToken
-//                                            , timestampLong1000
-//                                            , floor_id
-//                                            , x_position
-//                                            , y_position);
 
 //                    Call<CarPosition> callParka = HttpManager.getInstance()
 //                            .getServiceParka().sendXYPosition
@@ -159,14 +155,23 @@ public class ShowCsvDataActivity extends AppCompatActivity {
 
                     Call<CarPosition> callParka = HttpManager.getInstance()
                             .getServiceParka()
-                            .sendXYPosition("XxOwrl57E9BKjtenCkhDi3TloSvQqcRU",
+                            .sendXYPosition(
+                                    userToken, //pass
                                     6,
                                     4,
-                                    5018,
-                                    "ewkFEokjQuM:APA91bGwWl1tOinsGr44K7YaLbA0mMY84fYxVYvQAtaHH-LsP-nG5mSmXbRR6c12qsmvyDTZndh0Pqub3G_wR4z_CXX5i_lE_Zq7-mYfz8yZEaR7rO9yzViQBUCY42-AlZNmjwSkRaht",
+                                    floor_id, //pass
+                                    fcmToken, // pass
                                     1537958432);
 
-
+//                    Call<CarPosition> callParka = HttpManager.getInstance()
+//                            .getServiceParka()
+//                            .sendXYPosition(
+//                                    userToken
+//                                    ,x_position
+//                                    ,y_position
+//                                    ,floor_id
+//                                    ,fcmToken
+//                                    ,timestampLong1000);
 
                     Log.d("sendDataToAppServer","callParka = " + callParka);
 
