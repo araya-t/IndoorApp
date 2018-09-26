@@ -1,23 +1,20 @@
 package com.estimote.indoorapp.Controller.Parka;
 
-import android.app.Application;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.estimote.indoorapp.Adapter.CsvRowListAdapter;
 import com.estimote.indoorapp.Manager.HttpManager;
 import com.estimote.indoorapp.Model.Parka.CsvRow;
-import com.estimote.indoorapp.Model.dao.CarPositions;
+import com.estimote.indoorapp.Model.dao.CarPosition;
 import com.estimote.indoorapp.Model.dao.Token;
 import com.estimote.indoorapp.R;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,6 +48,29 @@ public class ShowCsvDataActivity extends AppCompatActivity {
         Log.d("ShowCsvDataActivity", "csvRows size = " + csvRows.size());
         Log.d("ShowCsvDataActivity", "rowToTrigger = " + rowToTrigger);
 
+//        Call<CarPosition> callParka = HttpManager.getInstance()
+//                .getServiceParka()
+//                .sendXYPosition("XxOwrl57E9BKjtenCkhDi3TloSvQqcRU",
+//                        "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm",
+//                        1537958432,
+//                        5018,
+//                        5.8,
+//                        2.5);
+//        callParka.enqueue(new Callback<CarPosition>() {
+//            @Override
+//            public void onResponse(Call<CarPosition> call, Response<CarPosition> response) {
+//                CarPosition obj = response.body();
+//                if (response.isSuccessful() && obj != null){
+//                    Log.d("Passsss","message is: "+obj);
+//                    Toast.makeText(ShowCsvDataActivity.this,"Wpwwwww : "+obj.getPositionId(),Toast.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CarPosition> call, Throwable t) {
+//                Toast.makeText(ShowCsvDataActivity.this, "Nooooo :"+t.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         if (csvRows.size() != 0) {
             int i = 0;
@@ -64,61 +84,102 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                     System.out.println("{10}getCountRow(" + csvRows.get(i).getCountRow() + ") = rowToTrigger");
                     is_triggered = true;
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
                     //set data to send
-                    boolean is_available = false;
-                    Call<Response> callGMS = HttpManager.getInstance()
+                    String is_available = "False";
+                    Call<Void> callGMS = HttpManager.getInstance()
                             .getServiceGMS().changeStatus
-                                    (324, String.valueOf(is_available));
+                                    (328, is_available);
 
                     //call GMS
-                    callGMS.enqueue(new Callback<Response>() {
+                    callGMS.enqueue(new Callback<Void>() {
                         @Override
-                        public void onResponse(Call<Response> call, Response<Response> response) {
+                        public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                Log.d("PAsssssss","Passssssss");
+                                Log.d("responseSuccess"," send trigger to GMS SUCCESS");
+                                Toast.makeText(ShowCsvDataActivity.this
+                                        , "Send trigger to GMS ==> SUCCESS", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Response> call, Throwable t) {
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(ShowCsvDataActivity.this
+                                    , "Send trigger to GMS ==> FAILED", Toast.LENGTH_SHORT).show();
 
                         }
                     });
                 }
 
 
-                /** -------------------------------------------------------------------------------- **/
+        /** --------------------------------------------------------------------------------------- **/
 
                 //if value of 'csvRows.get(i).is_stop_engine()' == true --> send data to App Server
                 if (csvRows.get(i).is_stop_engine() == true && !is_stop_engine) {
                     System.out.println("stop engine = true | " + csvRows.get(i).is_stop_engine());
                     is_stop_engine = true;
 
+                    Log.d("sendDataToAppServer","-----------------------------------------");
+
+                    String  userToken = "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU";
+                    String  fcmToken = "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm";
+                    long timestampLong1000 = csvRows.get(i).getTimeStampLong() / 1000L;
+                    double x_position = csvRows.get(i).getX_position();
+                    double y_position = csvRows.get(i).getY_position();
+
+//                    String userToken = "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU";
+//                    String fcmToken = "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm";
+//                    long timestampLong1000 = csvRows.get(i).getTimeStampLong() / 1000L;
+//                    String timestampLong1000Str = ""+timestampLong1000;
+//                    String x_position = ""+csvRows.get(i).getX_position();
+//                    String y_position = ""+csvRows.get(i).getY_position();
+//                    String floorIdStr = "" + floor_id;
+
+                    Log.d("sendDataToAppServer","timestampLong1000 = " + timestampLong1000
+                                                    + ", x_position = " + x_position
+                                                    + ", y_position = " + x_position);
+
                     //set data to send
-                    Call<CarPositions> callParka = HttpManager.getInstance()
+//                    Call<CarPosition> callParka = HttpManager.getInstance()
+//                                    .getServiceParka().sendXYPosition
+//                                             (userToken
+//                                            , fcmToken
+//                                            , timestampLong1000
+//                                            , floor_id
+//                                            , x_position
+//                                            , y_position);
+
+                    Call<CarPosition> callParka = HttpManager.getInstance()
                             .getServiceParka().sendXYPosition
-                                    ("XxOwrl57E9BKjtenCkhDi3TloSvQqcRU"
-                                            , Token.getToken()
-                                            , csvRows.get(i).getTimeStampLong() / 1000L
-                                            , floor_id
-                                            , csvRows.get(i).getX_position()
-                                            , csvRows.get(i).getY_position());
+                                            ( "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU"
+                                            , "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm"
+                                            , 1537958432
+                                            , 5018
+                                            , 6
+                                            , 4);
+
+                    Log.d("sendDataToAppServer","callParka = " + callParka);
 
                     //call Parka
-                    callParka.enqueue(new Callback<CarPositions>() {
+                    callParka.enqueue(new Callback<CarPosition>() {
                         @Override
-                        public void onResponse(retrofit2.Call<CarPositions> call, Response<CarPositions> response) {
+                        public void onResponse(retrofit2.Call<CarPosition> call, Response<CarPosition> response) {
                             if (response.isSuccessful()) {
+                                Toast.makeText(ShowCsvDataActivity.this
+                                        , "Send data to 'Parka' ==> SUCCESS", Toast.LENGTH_SHORT).show();
                                 Log.d("responseSuccess", "Send data to 'Parka' ==> SUCCESS");
                             }
                         }
 
                         @Override
-                        public void onFailure(retrofit2.Call<CarPositions> call, Throwable t) {
+                        public void onFailure(retrofit2.Call<CarPosition> call, Throwable t) {
+                            Toast.makeText(ShowCsvDataActivity.this
+                                    , "Send data to 'Parka' ==> FAILED", Toast.LENGTH_SHORT).show();
                             Log.d("responseSuccess","Failed Error message is " + t);
                         }
                     });
+
+                    Log.d("sendDataToAppServer"," After callParka.enqueue");
+
                 }
 
                 Log.d("readfromcsvfile",

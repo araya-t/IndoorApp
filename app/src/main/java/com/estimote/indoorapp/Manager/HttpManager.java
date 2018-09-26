@@ -35,12 +35,10 @@ public class HttpManager {
         Retrofit retrofitGMS = getRetrofitGMS(gson);
 
         serviceParka = retrofitParka.create(ApiService.class);
-        Log.d("HttpManager", "-----> serviceParka = " + serviceParka);
-
         serviceGMS = retrofitGMS.create(ApiService.class);
+
+        Log.d("HttpManager", "-----> serviceParka = " + serviceParka);
         Log.d("HttpManager", "-------> serviceGMS = " + serviceGMS);
-
-
         Log.d("HttpManager", "create HTTP Manager");
 
     }

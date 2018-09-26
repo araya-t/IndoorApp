@@ -31,6 +31,7 @@ class BeaconApplication : Application() {
         //Initialize thing(s) here
         Contextor.getInstance().init(applicationContext)
     }
+
     override fun onTerminate() {
         super.onTerminate()
     }

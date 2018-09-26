@@ -47,7 +47,7 @@ class FetchCloudDataActivity : AppCompatActivity() {
                     //Get new instance ID token
                     val token = task.result.token
                     Toast.makeText(this@FetchCloudDataActivity, "getInstanceId Token: $token", Toast.LENGTH_LONG).show()
-                    Log.d("TAG token-------------", "token: $token")
+                    Log.d("TagToken", "token: $token")
 
                 })
 
