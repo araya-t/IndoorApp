@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:textSize="17sp"
-            android:text="@string/btn_beacon_acc_csv"/>
+            android:text="btn_beacon_acc_csv"/>
 
         <Button
             android:id="@+id/btnReadFileSendData"
@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:textSize="17sp"
-            android:text="@string/btn_read_send_data"/>
+            android:text="btn_read_send_data"/>
 
 
     </LinearLayout>

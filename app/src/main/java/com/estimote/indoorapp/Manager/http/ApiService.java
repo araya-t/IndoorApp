@@ -1,5 +1,6 @@
 package com.estimote.indoorapp.Manager.http;
 
+
 import com.estimote.indoorapp.Model.dao.CarPosition;
 import com.estimote.indoorapp.Model.dao.Token;
 import com.estimote.indoorapp.Model.dao.User;
@@ -42,12 +43,12 @@ public interface ApiService {
 
     //send data of position when car stopped to App Server
     @FormUrlEncoded
-    @POST("users/car/{token}")
-    Call<CarPosition> sendXYPosition(@Path("token") String userToken,
-                                     @Field("fcm_token") String fcm_token,
-                                     @Field("timestamp_stop_engine") long timestampLong1000,
-                                     @Field("flood_id") int flood_id,
-                                     @Field("x") double x_position,
-                                     @Field("y") double y_position );
+    @POST("users/car/{token}/")
+    Call<CarPosition> sendXYPosition(@Path("token") String token,
+                                     @Field("x") double x,
+                                     @Field("y") double y,
+                                     @Field("floor_id") int floorId,
+                                     @Field("fcm_token") String fcmToken,
+                                     @Field("timestamp_stop_engine") long time);
 
 }

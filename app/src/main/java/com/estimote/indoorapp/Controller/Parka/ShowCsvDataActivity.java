@@ -121,7 +121,7 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                     Log.d("sendDataToAppServer","-----------------------------------------");
 
                     String  userToken = "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU";
-                    String  fcmToken = "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm";
+                    String  fcmToken = "ewkFEokjQuM:APA91bGwWl1tOinsGr44K7YaLbA0mMY84fYxVYvQAtaHH-LsP-nG5mSmXbRR6c12qsmvyDTZndh0Pqub3G_wR4z_CXX5i_lE_Zq7-mYfz8yZEaR7rO9yzViQBUCY42-AlZNmjwSkRaht";
                     long timestampLong1000 = csvRows.get(i).getTimeStampLong() / 1000L;
                     double x_position = csvRows.get(i).getX_position();
                     double y_position = csvRows.get(i).getY_position();
@@ -148,14 +148,25 @@ public class ShowCsvDataActivity extends AppCompatActivity {
 //                                            , x_position
 //                                            , y_position);
 
+//                    Call<CarPosition> callParka = HttpManager.getInstance()
+//                            .getServiceParka().sendXYPosition
+//                                            ( "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU"
+//                                            , "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm"
+//                                            , 1537958432
+//                                            , 5018
+//                                            , 6
+//                                            , 4);
+
                     Call<CarPosition> callParka = HttpManager.getInstance()
-                            .getServiceParka().sendXYPosition
-                                            ( "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU"
-                                            , "ezViZI1-f7E:APA91bGrozOqklQ61YzSLyFEG5Ec4FWcfK8g_LsbCCwL7Mb7s-rQ3t0AeWa2IK_evyhg95bb4jeSJTXzNtCd9G-yqnlg2RRQmCtCLAV1hVswWjaKzuuR-cKeec6LDDXC5wqaf1dUQxLm"
-                                            , 1537958432
-                                            , 5018
-                                            , 6
-                                            , 4);
+                            .getServiceParka()
+                            .sendXYPosition("XxOwrl57E9BKjtenCkhDi3TloSvQqcRU",
+                                    6,
+                                    4,
+                                    5018,
+                                    "ewkFEokjQuM:APA91bGwWl1tOinsGr44K7YaLbA0mMY84fYxVYvQAtaHH-LsP-nG5mSmXbRR6c12qsmvyDTZndh0Pqub3G_wR4z_CXX5i_lE_Zq7-mYfz8yZEaR7rO9yzViQBUCY42-AlZNmjwSkRaht",
+                                    1537958432);
+
+
 
                     Log.d("sendDataToAppServer","callParka = " + callParka);
 
