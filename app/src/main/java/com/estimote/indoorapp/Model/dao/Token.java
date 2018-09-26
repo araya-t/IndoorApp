@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Token {
     @SerializedName("token")
-    String token;
+    static String token;
     @SerializedName("message")
     String message;
     @SerializedName("status_code")  int statusCode;
@@ -19,7 +19,7 @@ public class Token {
         this.statusCode = statusCode;
     }
 
-    public String getToken() {
+    public static String getToken() {
         return token;
     }
 
