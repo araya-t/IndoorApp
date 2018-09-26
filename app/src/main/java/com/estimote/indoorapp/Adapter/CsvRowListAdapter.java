@@ -70,7 +70,6 @@ public class CsvRowListAdapter extends BaseAdapter {
                 + " | " + csvRow.getTimeStamp()
                 + " | " + csvRow.getTimeStampLong());
 
-        //if value of setTvIs_stop_engine --> send trigger to App server
 
         view.setTvCountRows(csvRow.getCountRow());
         view.setTvMillisec(csvRow.getMillisec());
