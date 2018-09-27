@@ -3,7 +3,8 @@ package com.estimote.indoorapp.Manager;
 import android.content.Context;
 import android.util.Log;
 
-import com.estimote.indoorapp.Manager.http.ApiService;
+import com.estimote.indoorapp.Manager.http.ApiServiceGMS;
+import com.estimote.indoorapp.Manager.http.ApiServiceParka;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,8 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpManager {
     private static HttpManager instance;
     private Context mContext;
-    private static ApiService serviceParka = null;
-    private static ApiService serviceGMS = null;
+    private static ApiServiceParka serviceParka = null;
+    private static ApiServiceGMS serviceGMS = null;
     private String url_parka = "https://applicationserver.parka028.me/";
     private String url_gms = "https://gms.parka028.me/";
 
@@ -34,13 +35,12 @@ public class HttpManager {
         Retrofit retrofitParka = getRetrofitParka(gson);
         Retrofit retrofitGMS = getRetrofitGMS(gson);
 
-        serviceParka = retrofitParka.create(ApiService.class);
-        serviceGMS = retrofitGMS.create(ApiService.class);
+        serviceParka = retrofitParka.create(ApiServiceParka.class);
+        serviceGMS = retrofitGMS.create(ApiServiceGMS.class);
 
         Log.d("HttpManager", "-----> serviceParka = " + serviceParka);
         Log.d("HttpManager", "-------> serviceGMS = " + serviceGMS);
         Log.d("HttpManager", "create HTTP Manager");
-
     }
 
     public Retrofit getRetrofitParka(Gson gson){
@@ -57,11 +57,11 @@ public class HttpManager {
                 .build();
     }
 
-    public ApiService getServiceParka() {
+    public ApiServiceParka getServiceParka() {
         return serviceParka;
     }
 
-    public ApiService getServiceGMS() {
+    public ApiServiceGMS getServiceGMS() {
         return serviceGMS;
     }
 }

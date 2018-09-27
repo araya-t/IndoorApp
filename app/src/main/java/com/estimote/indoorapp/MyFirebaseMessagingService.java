@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.estimote.indoorapp.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -15,8 +14,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    int idDataPayload=createId(), idNotiPayload=createId();
+    int idDataPayload = createId(), idNotiPayload = createId();
     private final String CH1 = "CH1";
+    private String text = "";
 
     public MyFirebaseMessagingService(){
 
@@ -64,13 +64,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData() != null){
             if (remoteMessage.getData().size() > 0){
                 for (String k : remoteMessage.getData().keySet()){
-                    String s = remoteMessage.getData().get(k);
-                    Log.d("Data Payload: ", "Message data payload: "+remoteMessage.getData().get(k));
+                    text = remoteMessage.getData().get(k);
+                    Log.d("DataPayload", "Message data payload: "+remoteMessage.getData().get(k));
 
                     NotificationCompat.Builder b = new NotificationCompat.Builder(this, CH1);
                     b.setSmallIcon(R.mipmap.ic_launcher_round)
                             .setContentTitle("IndoorApp")
-                            .setContentText(s);
+                            .setContentText(text);
 
                     NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.notify(idDataPayload, b.build());
@@ -79,10 +79,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (remoteMessage.getNotification() != null){
-            Log.d("Notification Payload", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.d("NotificationPayload", "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
             String sn = remoteMessage.getNotification().getBody();
-
 
             NotificationCompat.Builder b = new NotificationCompat.Builder(this, CH1);
             b.setSmallIcon(R.mipmap.ic_launcher_round)

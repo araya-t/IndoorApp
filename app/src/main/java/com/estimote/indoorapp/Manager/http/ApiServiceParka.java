@@ -10,11 +10,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
-public interface ApiService {
+public interface ApiServiceParka {
     @FormUrlEncoded
     @POST("users/login/")
     Call<Token> login(@Field("username") String username,
@@ -35,12 +34,6 @@ public interface ApiService {
     @DELETE("users/logout/{token}/")
     Call<User> logout(@Path("token") String userToken);
 
-    //send trigger to GMS to change the status of parking slot
-    @FormUrlEncoded
-    @PUT("positions/{position_id}/parking")
-    Call<Void> changeStatus(@Path("position_id") int position_id,
-                      @Field("is_available") String is_available);
-
     //send data of position when car stopped to App Server
     @FormUrlEncoded
     @POST("users/car/{token}/")
@@ -50,5 +43,4 @@ public interface ApiService {
                                      @Field("floor_id") int floorId,
                                      @Field("fcm_token") String fcmToken,
                                      @Field("timestamp_stop_engine") long timestampLong1000);
-
 }
