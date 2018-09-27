@@ -21,9 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.IndoorLocation.MainActivity" />
+        <activity android:name=".Activity.IndoorLocation.MainActivity" />
         <activity
-            android:name=".Controller.IndoorLocation.FetchCloudDataActivity"
+            android:name=".Activity.IndoorLocation.FetchCloudDataActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
@@ -32,8 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.IndoorLocation.LocationListActivity" />
-        <activity android:name=".Controller.Parka.CsvBeaconAcceDataActivity" />
+        <activity android:name=".Activity.IndoorLocation.LocationListActivity" />
+        <activity android:name=".Activity.Parka.CsvBeaconAcceDataActivity" />
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
@@ -41,9 +41,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Controller.Parka.MainMenuActivity" />
-        <activity android:name=".Controller.Parka.ReadFileSendDataActivity" />
-        <activity android:name=".Controller.Parka.ShowCsvDataActivity"></activity>
+        <activity android:name=".Activity.Parka.MainMenuActivity" />
+        <activity android:name=".Activity.Parka.ReadFileSendDataActivity" />
+        <activity android:name=".Activity.Parka.ShowCsvDataActivity"></activity>
     </application>
 
 </manifest>

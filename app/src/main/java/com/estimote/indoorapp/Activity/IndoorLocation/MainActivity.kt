@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Controller.IndoorLocation
+package com.estimote.indoorapp.Activity.IndoorLocation
 
 import android.app.Notification
 import android.content.Context
@@ -26,10 +26,6 @@ import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
 import com.estimote.indoorsdk_module.view.IndoorLocationView
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.iid.InstanceIdResult
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 

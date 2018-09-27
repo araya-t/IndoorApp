@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Controller.IndoorLocation
+package com.estimote.indoorapp.Activity.IndoorLocation
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.Window
 import android.widget.Toast
 
-import com.estimote.indoorapp.Controller.Parka.MainMenuActivity
+import com.estimote.indoorapp.Activity.Parka.MainMenuActivity
+import com.estimote.indoorapp.Activity.Parka.ReadFileSendDataActivity
 import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
+import com.estimote.indoorapp.Model.dao.Token
 import com.estimote.indoorapp.R
 import com.estimote.indoorsdk_module.cloud.CloudCallback
 import com.estimote.indoorsdk_module.cloud.EstimoteCloudException
@@ -25,6 +27,7 @@ import com.google.firebase.iid.FirebaseInstanceId
  */
 
 class FetchCloudDataActivity : AppCompatActivity() {
+    private lateinit var fcmToken:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,7 @@ class FetchCloudDataActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_fetch_cloud_data)
 
-/** ------------ Init token from FCM ----------------------------- **/
+/** ------------ Init token from FCM -------------------------------------------------------------- **/
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
@@ -45,11 +48,12 @@ class FetchCloudDataActivity : AppCompatActivity() {
                     }
 
                     //Get new instance ID token
-                    val token = task.result.token
-                    Toast.makeText(this@FetchCloudDataActivity, "getInstanceId Token: $token", Toast.LENGTH_LONG).show()
-                    Log.d("TagToken", "token: $token")
+                    fcmToken = task.result.token
+                    Toast.makeText(this@FetchCloudDataActivity, "getInstanceId Token: $fcmToken", Toast.LENGTH_LONG).show()
+                    Log.d("TagToken", "token: $fcmToken")
 
                 })
+/** ----------------------------------------------------------------------------------------------- **/
 
         // Create object for communicating with Estimote cloud.
         // IMPORTANT - you need to put here your Estimote Cloud credentials.
@@ -84,7 +88,12 @@ class FetchCloudDataActivity : AppCompatActivity() {
 //        startActivity(Intent(this, LocationListActivity::class.java))
 //        var locationId = "six-slots-only--floor-10b"
 
-        startActivity(Intent(this,MainMenuActivity::class.java))
+        val intent = Intent(this, MainMenuActivity::class.java)
+        val extra = Bundle()
+        extra.putString("fcmToken",fcmToken)
+        intent.putExtras(extra)
+
+        startActivity(intent)
     }
 
 }

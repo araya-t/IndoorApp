@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Controller.Parka;
+package com.estimote.indoorapp.Activity.Parka;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +24,7 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
     private CsvReader csvReader;
     private List<CsvRow> csvRows;
     private int rowToTrigger;
+    private String fcmToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,11 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
         btnFileName1 = findViewById(R.id.btnFileName1);
         btnFileName2 = findViewById(R.id.btnFileName2);
         csvReader = new CsvReader();
+
+        Intent intent = getIntent();
+        Bundle extra = intent.getExtras();
+        fcmToken = extra.getString("fcmToken");
+        Log.i("TagToken","ReadFileSendDataActivity \ntoken: " + fcmToken);
     }
 
     @Override
@@ -61,12 +67,7 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
             Bundle extra = new Bundle();
             extra.putSerializable("csvRows", (Serializable) csvRows);
-
-            Intent intent = new Intent(this, ShowCsvDataActivity.class);
-            intent.putExtra ("extra", extra);
-            intent.putExtra("rowToTrigger",rowToTrigger);
-//            csvRows.clear();
-            startActivity(intent);
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken);
         }
 
         if(v == btnFileName2){
@@ -85,11 +86,17 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
             Bundle extra = new Bundle();
             extra.putSerializable("csvRows", (Serializable) csvRows);
 
-            Intent intent = new Intent(this, ShowCsvDataActivity.class);
-            intent.putExtra ("extra", extra);
-//            csvRows.clear();
-            startActivity(intent);
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken);
         }
+    }
+
+    public void startShowCsvDataActivity(Bundle extra, int rowToTrigger, String fcmToken){
+        Intent intent = new Intent(this, ShowCsvDataActivity.class);
+        intent.putExtra ("extra", extra);
+        intent.putExtra("rowToTrigger",rowToTrigger);
+        intent.putExtra("fcmToken",fcmToken);
+//            csvRows.clear();
+        startActivity(intent);
     }
 
 

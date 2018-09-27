@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Controller.Parka
+package com.estimote.indoorapp.Activity.Parka
 
 import android.app.Notification
 import android.content.Context

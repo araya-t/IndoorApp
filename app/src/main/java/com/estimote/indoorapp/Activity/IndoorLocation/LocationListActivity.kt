@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Controller.IndoorLocation
+package com.estimote.indoorapp.Activity.IndoorLocation
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
