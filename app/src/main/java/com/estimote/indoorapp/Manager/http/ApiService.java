@@ -1,6 +1,5 @@
 package com.estimote.indoorapp.Manager.http;
 
-
 import com.estimote.indoorapp.Model.dao.CarPosition;
 import com.estimote.indoorapp.Model.dao.Token;
 import com.estimote.indoorapp.Model.dao.User;
@@ -13,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
 
 public interface ApiService {
     @FormUrlEncoded
@@ -49,6 +49,6 @@ public interface ApiService {
                                      @Field("y") double y_position,
                                      @Field("floor_id") int floorId,
                                      @Field("fcm_token") String fcmToken,
-                                     @Field("timestamp_stop_engine") long time);
+                                     @Field("timestamp_stop_engine") long timestampLong1000);
 
 }
