@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.estimote.indoorapp.Controller.Parka.MainMenuActivity">
+    tools:context="com.estimote.indoorapp.Activity.Parka.MainMenuActivity">
 
 
     <LinearLayout
