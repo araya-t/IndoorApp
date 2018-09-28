@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Adapter;
+package com.estimote.indoorapp.Adapter.Parka;
 
 import android.util.Log;
 import android.view.LayoutInflater;

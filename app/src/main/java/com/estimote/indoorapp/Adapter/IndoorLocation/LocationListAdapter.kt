@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.Model.IndoorLocation
+package com.estimote.indoorapp.Adapter.IndoorLocation
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
