@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.utils;
+package com.estimote.indoorapp.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
