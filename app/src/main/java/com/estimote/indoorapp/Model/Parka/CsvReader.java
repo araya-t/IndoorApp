@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CsvReader {
     private List<CsvRow> csvRows;
-    private String fileDirectory = "BeaconSensorCsvFile"; //default directory
+    private String fileDirectory = "BeaconSensorCsvFile/Midterm"; //default directory
     SimpleDateFormat sdfTimeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS");
     private int countRow = 0;
 
@@ -56,6 +56,7 @@ public class CsvReader {
         }
 
         bufferedReader.close();
+        countRow = 1;
 
         return csvRows;
     }
@@ -91,6 +92,7 @@ public class CsvReader {
         }
 
         bufferedReader.close();
+        countRow = 1;
 
         return csvRows;
     }
