@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.estimote.indoorapp.Adapter.CsvRowListAdapter;
+import com.estimote.indoorapp.Adapter.Parka.CsvRowListAdapter;
 import com.estimote.indoorapp.Manager.Contextor;
 import com.estimote.indoorapp.Manager.HttpManager;
 import com.estimote.indoorapp.Model.Parka.CsvRow;

@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.estimote.indoorapp.Model.IndoorLocation.BeaconApplication
-import com.estimote.indoorapp.Model.IndoorLocation.LocationListAdapter
+import com.estimote.indoorapp.Adapter.IndoorLocation.LocationListAdapter
 import com.estimote.indoorapp.R
 import com.estimote.indoorsdk_module.cloud.Location
 
