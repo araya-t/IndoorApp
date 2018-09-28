@@ -14,6 +14,7 @@ import com.estimote.indoorapp.R;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,6 +43,7 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
         btnFileName1 = findViewById(R.id.btnFileName1);
         btnFileName2 = findViewById(R.id.btnFileName2);
         csvReader = new CsvReader();
+        csvRows = new ArrayList<>();
 
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
@@ -52,13 +54,15 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         if(v == btnFileName1){
-            fileName = "BeaconAccelerometerData_2018-09-25_13:47:35_sampling_3microsec.csv";
-            rowToTrigger = 10;
+            fileName = "BeaconAccelerometerData_2018-09-25_13_47_35_sampling_3microsec.csv";
+            rowToTrigger = 25;
+            int positionId = 322;
 
-            Log.d("ReadFileSendDataAct","onClick --> btnFileName1");
 
             try {
+                csvRows.clear();
                 csvRows = csvReader.readCSV(fileName);
+                Log.d("ReadFileSendDataAct","file name 1 --> size: " +csvRows.size() );
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
@@ -67,16 +71,20 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
             Bundle extra = new Bundle();
             extra.putSerializable("csvRows", (Serializable) csvRows);
-            startShowCsvDataActivity(extra,rowToTrigger,fcmToken);
+
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
         }
 
         if(v == btnFileName2){
-            fileName = "BeaconAccelerometerData_2018-09-25_13:47:35_sampling_3microsec.csv";
-            rowToTrigger = 10;
-            Log.d("ReadFileSendDataAct","onClick --> btnFileName2");
+            fileName = "BeaconAccelerometerData_2018-09-25_13_41_04_sampling_3microsec.csv";
+            rowToTrigger = 21;
+            int positionId = 324;
 
             try {
+                csvRows.clear();
                 csvRows = csvReader.readCSV(fileName);
+                Log.d("ReadFileSendDataAct","file name 2 --> size: " +csvRows.size() );
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
@@ -86,16 +94,18 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
             Bundle extra = new Bundle();
             extra.putSerializable("csvRows", (Serializable) csvRows);
 
-            startShowCsvDataActivity(extra,rowToTrigger,fcmToken);
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
         }
     }
 
-    public void startShowCsvDataActivity(Bundle extra, int rowToTrigger, String fcmToken){
+    public void startShowCsvDataActivity(Bundle extra, int rowToTrigger, String fcmToken, int positionId){
         Intent intent = new Intent(this, ShowCsvDataActivity.class);
-        intent.putExtra ("extra", extra);
+        intent.putExtra("extra", extra);
         intent.putExtra("rowToTrigger",rowToTrigger);
         intent.putExtra("fcmToken",fcmToken);
-//            csvRows.clear();
+        intent.putExtra("positionId",positionId);
+
+//        csvRows.clear();
         startActivity(intent);
     }
 

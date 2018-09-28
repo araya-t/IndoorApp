@@ -36,6 +36,7 @@ public class ShowCsvDataActivity extends AppCompatActivity {
     private DecimalFormat dcm = new DecimalFormat("0.000000");
     private String fcmToken;
     private Toast toast;
+    private int positionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                     String is_available = "False";
                     Call<Void> callGMS = HttpManager.getInstance()
                             .getServiceGMS().changeStatus
-                                    (328, is_available);
+                                    (positionId, is_available);
+                    Log.d("sendDataTrigger"," position id = " + positionId);
 
                     //call GMS server
                     callGMS.enqueue(new Callback<Void>() {
@@ -68,8 +70,6 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 Log.d("responseSuccess"," send trigger to GMS SUCCESS");
-//                                Toast.makeText(ShowCsvDataActivity.this
-//                                        , "Send trigger to GMS ==> SUCCESS", Toast.LENGTH_SHORT).show();
 
                                 toast = Toast.makeText(ShowCsvDataActivity.this
                                         , "Send trigger to GMS ==> SUCCESS", Toast.LENGTH_SHORT);
@@ -107,23 +107,27 @@ public class ShowCsvDataActivity extends AppCompatActivity {
 
                     final String userToken = "XxOwrl57E9BKjtenCkhDi3TloSvQqcRU";
                     final long timestampLong1000 = csvRows.get(i).getTimeStampLong() / 1000L;
-                    double x_position = csvRows.get(i).getX_position();
+                    final double x_position = csvRows.get(i).getX_position();
                     final double y_position = csvRows.get(i).getY_position();
 
                     Log.d("sendDataToAppServer","timestampLong1000 = " + timestampLong1000
                                                     + ", x_position = " + x_position
                                                     + ", y_position = " + y_position);
 
+
+
                     //set data to send for processing position that user parked
                     Call<CarPosition> callParka = HttpManager.getInstance()
                             .getServiceParka()
                             .sendXYPosition(
                                     userToken
-                                    ,16.85
-                                    ,2.5
+                                    ,x_position
+                                    ,y_position
                                     ,floor_id
                                     ,fcmToken
                                     ,System.currentTimeMillis()/1000L);
+
+
 
                     //call Parka server
                     callParka.enqueue(new Callback<CarPosition>() {
@@ -196,6 +200,7 @@ public class ShowCsvDataActivity extends AppCompatActivity {
         fcmToken = intent.getStringExtra("fcmToken");
         csvRows = (List<CsvRow>) extra.getSerializable("csvRows");
         rowToTrigger = intent.getIntExtra("rowToTrigger", 1);
+        positionId = intent.getIntExtra("positionId",positionId);
 
         Log.i("TagToken","ShowCsvDataActivity \ntoken: " + fcmToken);
 

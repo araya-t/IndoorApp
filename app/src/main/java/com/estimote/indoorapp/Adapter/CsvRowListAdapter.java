@@ -66,10 +66,9 @@ public class CsvRowListAdapter extends BaseAdapter {
         CsvRowListItemViewGroup view = (CsvRowListItemViewGroup) convertView;
         CsvRow csvRow = (CsvRow) getItem(position);
 
-        Log.i("CsvRowListAdapter"," mill&timeStamp+timeStampLong \n"+ csvRow.getMillisec()
-                + " | " + csvRow.getTimeStamp()
-                + " | " + csvRow.getTimeStampLong());
-
+//        Log.i("CsvRowListAdapter"," mill&timeStamp+timeStampLong \n"+ csvRow.getMillisec()
+//                + " | " + csvRow.getTimeStamp()
+//                + " | " + csvRow.getTimeStampLong());
 
         view.setTvCountRows(csvRow.getCountRow());
         view.setTvMillisec(csvRow.getMillisec());
