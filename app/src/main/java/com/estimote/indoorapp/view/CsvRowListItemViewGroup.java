@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.estimote.indoorapp.R;
+import com.estimote.indoorapp.view.state.BundleSavedState;
 
 public class CsvRowListItemViewGroup extends BaseCustomViewGroup {
     TextView tvCountRows, tvMillisec, tvTimestamp, tvTimestampLong, tvIs_stop_engine;

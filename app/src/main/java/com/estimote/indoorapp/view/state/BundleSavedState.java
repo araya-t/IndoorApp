@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.view;
+package com.estimote.indoorapp.view.state;
 
 import android.os.Bundle;
 import android.os.Parcel;

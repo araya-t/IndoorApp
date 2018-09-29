@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.widget.FrameLayout;
 
+import com.estimote.indoorapp.view.state.BundleSavedState;
+
 /**
  * Created by nuuneoi on 1/9/2016.
  */
