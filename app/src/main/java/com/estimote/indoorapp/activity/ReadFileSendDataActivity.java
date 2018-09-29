@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.estimote.indoorapp.model.Model.CsvReader;
-import com.estimote.indoorapp.model.Model.CsvRow;
+import com.estimote.indoorapp.model.CsvReader;
+import com.estimote.indoorapp.utils.CsvRow;
 import com.estimote.indoorapp.R;
 
 import java.io.IOException;

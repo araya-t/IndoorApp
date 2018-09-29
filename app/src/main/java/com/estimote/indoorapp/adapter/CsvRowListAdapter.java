@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.estimote.indoorapp.manager.Contextor;
-import com.estimote.indoorapp.model.CsvRow;
+import com.estimote.indoorapp.utils.CsvRow;
 import com.estimote.indoorapp.view.CsvRowListItemViewGroup;
 
 import java.util.List;

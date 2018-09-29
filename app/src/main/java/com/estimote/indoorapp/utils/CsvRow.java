@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.model;
+package com.estimote.indoorapp.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;

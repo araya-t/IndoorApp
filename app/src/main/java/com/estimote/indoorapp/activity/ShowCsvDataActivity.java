@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.estimote.indoorapp.adapter.CsvRowListAdapter;
 import com.estimote.indoorapp.manager.Contextor;
 import com.estimote.indoorapp.manager.HttpManager;
-import com.estimote.indoorapp.model.Model.CsvRow;
+import com.estimote.indoorapp.utils.CsvRow;
 import com.estimote.indoorapp.dao.CarPosition;
 import com.estimote.indoorapp.R;
 

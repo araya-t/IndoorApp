@@ -3,6 +3,8 @@ package com.estimote.indoorapp.model;
 import android.os.Environment;
 import android.util.Log;
 
+import com.estimote.indoorapp.utils.CsvRow;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

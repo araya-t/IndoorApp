@@ -16,7 +16,7 @@ import android.widget.Toast
 
 import com.estimote.indoorapp.BeaconApplication
 import com.estimote.indoorapp.model.CsvReader
-import com.estimote.indoorapp.model.CsvRow
+import com.estimote.indoorapp.utils.CsvRow
 import com.estimote.indoorapp.model.CsvWriter
 import com.estimote.indoorapp.R
 import com.estimote.indoorapp.view.AccelerometerDataViewGroup
