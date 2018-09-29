@@ -1,4 +1,4 @@
-package com.estimote.indoorapp.model;
+package com.estimote.indoorapp.etc;
 
 
 import android.os.Environment;
