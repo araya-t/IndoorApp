@@ -10,7 +10,7 @@
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context="com.estimote.indoorapp.Activity.Parka.ShowCsvDataActivity">
+    tools:context="com.estimote.indoorapp.activity.ShowCsvDataActivity">
 
     <ListView
         android:id="@+id/listView"
