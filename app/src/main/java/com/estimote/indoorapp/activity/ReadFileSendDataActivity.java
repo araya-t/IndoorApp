@@ -61,7 +61,7 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
             try {
                 csvRows.clear();
-                csvRows = csvReader.readCSV(fileName);
+                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
                 Log.d("ReadFileSendDataAct","file name 1 --> size: " +csvRows.size() );
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,7 +82,7 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
             try {
                 csvRows.clear();
-                csvRows = csvReader.readCSV(fileName);
+                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
                 Log.d("ReadFileSendDataAct","file name 2 --> size: " +csvRows.size() );
 
             } catch (IOException e) {
