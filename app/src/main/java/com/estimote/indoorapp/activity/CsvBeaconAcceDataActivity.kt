@@ -248,7 +248,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
 
             val acc_x_formatted = dcm.format(acc_x)
             val acc_y_formatted = dcm.format(acc_y)
-            val acc_z_formatted = dcm.format(acc_y)
+            val acc_z_formatted = dcm.format(acc_z)
 
             milliSecAcce = System.currentTimeMillis() - startTime
             timeStampAcce = System.currentTimeMillis()
@@ -325,7 +325,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             var csvRows: MutableList<CsvRow> = ArrayList()
             try {
                 if (fileName != null) {
-                    csvRows = csvReader.readCSV(fileName)
+                    csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

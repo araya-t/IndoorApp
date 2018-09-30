@@ -11,10 +11,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.estimote.indoorapp.model.Model.BeaconFileWriter
+import com.estimote.indoorapp.etc.BeaconFileWriter
 import com.estimote.indoorapp.BeaconApplication
-import com.estimote.indoorapp.model.Model.CsvReader
-import com.estimote.indoorapp.model.Model.CsvWriter
+import com.estimote.indoorapp.model.CsvReader
+import com.estimote.indoorapp.model.CsvWriter
 import com.estimote.indoorapp.R
 import com.estimote.indoorapp.view.AccelerometerDataViewGroup
 import com.estimote.indoorapp.view.StartStopButtonViewGroup
