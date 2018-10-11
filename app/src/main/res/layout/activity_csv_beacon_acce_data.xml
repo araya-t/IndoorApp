@@ -25,6 +25,13 @@
             android:layout_marginTop="30dp">
         </com.estimote.indoorapp.view.StartStopButtonViewGroup>
 
+        <com.estimote.indoorapp.view.ChangeGmsStatusViewGroup
+            android:id="@+id/changeGmsStatusViewGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+        </com.estimote.indoorapp.view.ChangeGmsStatusViewGroup>
+
         <com.estimote.indoorapp.view.StopEngineButtonViewGroup
             android:id="@+id/stopEngineButtonViewGroup"
             android:layout_width="match_parent"

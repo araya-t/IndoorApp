@@ -20,6 +20,7 @@ import com.estimote.indoorapp.utils.CsvRow
 import com.estimote.indoorapp.model.CsvWriter
 import com.estimote.indoorapp.R
 import com.estimote.indoorapp.view.AccelerometerDataViewGroup
+import com.estimote.indoorapp.view.ChangeGmsStatusViewGroup
 import com.estimote.indoorapp.view.StartStopButtonViewGroup
 import com.estimote.indoorapp.view.StopEngineButtonViewGroup
 import com.estimote.indoorsdk.IndoorLocationManagerBuilder
@@ -50,6 +51,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private lateinit var accelerometerDataViewGroup: AccelerometerDataViewGroup
     private lateinit var startStopButtonViewGroup: StartStopButtonViewGroup
     private lateinit var stopEngineButtonViewGroup: StopEngineButtonViewGroup
+    private lateinit var changeGmsStatusViewGroup: ChangeGmsStatusViewGroup
     private val dcm = DecimalFormat("0.000000")
     private val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss")
     private val sdfTimeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS")
@@ -58,6 +60,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private var fileName: String? = null
     private lateinit var csvWriter: CsvWriter
     private var isStopEngine: Boolean = false
+    private var isChangeGmsStatus: Boolean = false
     private var timeStampAcce: Long = 0
     private var milliSecAcce:Long = 0
     private var listenerSampling = -1
@@ -99,6 +102,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         startStopButtonViewGroup.btnStop.setOnClickListener(this)
         accelerometerDataViewGroup.btnEnter.setOnClickListener(this)
         stopEngineButtonViewGroup.btnStopEngine.setOnClickListener(this)
+        changeGmsStatusViewGroup.btnChangeGmsStatus.setOnClickListener(this)
 
         Toast.makeText(this, "You can set listener sampling rate", Toast.LENGTH_SHORT).show()
 
@@ -186,6 +190,12 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             isStopEngine = true
             Toast.makeText(this, "Stop engine", Toast.LENGTH_SHORT).show()
         }
+
+        if (v === changeGmsStatusViewGroup.btnChangeGmsStatus) {
+            isChangeGmsStatus = true
+            Toast.makeText(this, "Change GMS status", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     fun initInstances() {
@@ -195,10 +205,12 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         accelerometerDataViewGroup = findViewById(R.id.accelerometerDataViewGroup)
         startStopButtonViewGroup = findViewById(R.id.startStopButtonViewGroup)
         stopEngineButtonViewGroup = findViewById(R.id.stopEngineButtonViewGroup)
+        changeGmsStatusViewGroup = findViewById(R.id.changeGmsStatusViewGroup)
 
         csvWriter = CsvWriter()
         csvReader = CsvReader()
 
+        isChangeGmsStatus = false
         isStopEngine = false
         isReadFinish = false
         fileName = null
@@ -273,6 +285,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                     + isStopEngine  + ","
                     + locationPosition_x + ","
                     + locationPosition_y + ","
+                    + isChangeGmsStatus + ","
                     + "\n")
 
             if (csvWriter.file != null) {
@@ -304,6 +317,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                             + "is_stop_engine" + ","
                             + "x_position" + ","
                             + "y_position" + ","
+                            + "is_change_gms_status" + ","
                             + "\n")
         csvWriter.writeHeadFile(headFileStr)
 
@@ -370,6 +384,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         }
 
         isStopEngine = false
+        isChangeGmsStatus = false
     }
 
 }

@@ -58,7 +58,6 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
             rowToTrigger = 25;
             int positionId = 322;
 
-
             try {
                 csvRows.clear();
                 csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);

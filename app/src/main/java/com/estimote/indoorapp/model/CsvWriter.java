@@ -1,5 +1,7 @@
 package com.estimote.indoorapp.model;
 
+import android.util.Log;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -24,6 +26,7 @@ public class CsvWriter {
 
             file = new BufferedWriter(new FileWriter(initFileDirectory.getAbsolutePath()+"/"+fileName));
             startTime = System.currentTimeMillis();
+            Log.d("CsvWriter","BufferedWriter = " + file);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,9 +37,11 @@ public class CsvWriter {
 
     private File createDirectory(String directory){
         File initFileDirectory = new File(directory);
+        Log.d("CsvWriter","initFileDirectory = " + initFileDirectory);
 
         if(!initFileDirectory.exists()){
-            initFileDirectory.mkdirs();
+            boolean isSuccess = initFileDirectory.mkdirs();
+            Log.d("CsvWriter","initFileDirectory.mkdirs() = " + isSuccess);
         }
 
         return initFileDirectory;
