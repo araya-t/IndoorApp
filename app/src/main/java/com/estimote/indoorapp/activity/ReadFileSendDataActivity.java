@@ -95,6 +95,8 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
             startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
         }
+
+
     }
 
     public void startShowCsvDataActivity(Bundle extra, int rowToTrigger, String fcmToken, int positionId){

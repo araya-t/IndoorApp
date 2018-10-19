@@ -14,14 +14,14 @@
             android:id="@+id/btnStartRecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="@string/start_recording" />
+            android:layout_marginRight="0dp"
+            android:text="start" />
 
         <Button
             android:id="@+id/btnStopRecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/stop_recording" />
+            android:text="stop" />
 
     </LinearLayout>
 

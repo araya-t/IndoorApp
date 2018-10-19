@@ -5,12 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.estimote.indoorapp.activity.CsvBeaconAcceDataActivity">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3">
+
+        <com.estimote.indoorsdk_module.view.IndoorLocationView
+            android:id="@+id/indoor_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_green" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center|center_vertical|top">
+        android:gravity="center|center_vertical|bottom"
+        android:layout_weight="1">
 
         <com.estimote.indoorapp.view.AccelerometerDataViewGroup
             android:id="@+id/accelerometerDataViewGroup"
@@ -18,28 +36,52 @@
             android:layout_height="wrap_content">
         </com.estimote.indoorapp.view.AccelerometerDataViewGroup>
 
-        <com.estimote.indoorapp.view.StartStopButtonViewGroup
-            android:id="@+id/startStopButtonViewGroup"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
-        </com.estimote.indoorapp.view.StartStopButtonViewGroup>
+            android:orientation="horizontal">
 
-        <com.estimote.indoorapp.view.ChangeGmsStatusViewGroup
-            android:id="@+id/changeGmsStatusViewGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-        </com.estimote.indoorapp.view.ChangeGmsStatusViewGroup>
+            <com.estimote.indoorapp.view.StartStopButtonViewGroup
+                android:id="@+id/startStopButtonViewGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.estimote.indoorapp.view.StartStopButtonViewGroup>
 
-        <com.estimote.indoorapp.view.StopEngineButtonViewGroup
-            android:id="@+id/stopEngineButtonViewGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-        </com.estimote.indoorapp.view.StopEngineButtonViewGroup>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.estimote.indoorapp.view.ChangeGmsStatusViewGroup
+                android:id="@+id/changeGmsStatusViewGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.estimote.indoorapp.view.ChangeGmsStatusViewGroup>
+
+            <Button
+                android:id="@+id/stillButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="still"/>
+
+            <com.estimote.indoorapp.view.StopEngineButtonViewGroup
+                android:id="@+id/stopEngineButtonViewGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.estimote.indoorapp.view.StopEngineButtonViewGroup>
+
+        </LinearLayout>
     </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>
 

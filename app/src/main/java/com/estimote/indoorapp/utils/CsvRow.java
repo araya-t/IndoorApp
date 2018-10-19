@@ -12,17 +12,19 @@ public class CsvRow implements Parcelable {
     private double acce_x;
     private double acce_y;
     private double acce_z;
+    private boolean is_still;
     private boolean is_stop_engine;
     private double x_position;
     private double y_position;
+    private boolean isChangeGmsStatus;
 
     public CsvRow(){
 
     }
 
     public CsvRow( int countRow, String millisec, String timeStamp, long timeStamplong,
-                   String acce_x, String acce_y, String acce_z,
-                   String is_stop_engine, String x_position, String y_position){
+                   String acce_x, String acce_y, String acce_z, String is_still,
+                   String is_stop_engine, String x_position, String y_position, String isChangeGmsStatus){
         this.countRow = countRow;
         this.millisec = Long.parseLong(millisec);
         this.timeStamp = timeStamp;
@@ -30,9 +32,11 @@ public class CsvRow implements Parcelable {
         this.acce_x = Double.parseDouble(acce_x);
         this.acce_y = Double.parseDouble(acce_y);
         this.acce_z = Double.parseDouble(acce_z);
+        this.is_still = Boolean.parseBoolean(is_still);
         this.is_stop_engine = Boolean.parseBoolean(is_stop_engine);
         this.x_position = Double.parseDouble(x_position);
         this.y_position = Double.parseDouble(y_position);
+        this.isChangeGmsStatus = Boolean.parseBoolean(isChangeGmsStatus);
     }
 
     protected CsvRow(Parcel in) {
@@ -43,9 +47,11 @@ public class CsvRow implements Parcelable {
         acce_x = in.readDouble();
         acce_y = in.readDouble();
         acce_z = in.readDouble();
+        is_still = in.readByte() != 0;
         is_stop_engine = in.readByte() != 0;
         x_position = in.readDouble();
         y_position = in.readDouble();
+        isChangeGmsStatus = in.readByte() != 0;
     }
 
     public static final Creator<CsvRow> CREATOR = new Creator<CsvRow>() {

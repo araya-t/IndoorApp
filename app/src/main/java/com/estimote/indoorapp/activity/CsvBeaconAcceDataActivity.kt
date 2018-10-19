@@ -10,8 +10,11 @@ import android.hardware.SensorManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 
 import com.estimote.indoorapp.BeaconApplication
@@ -28,7 +31,9 @@ import com.estimote.indoorsdk_module.algorithm.OnPositionUpdateListener
 import com.estimote.indoorsdk_module.algorithm.ScanningIndoorLocationManager
 import com.estimote.indoorsdk_module.cloud.Location
 import com.estimote.indoorsdk_module.cloud.LocationPosition
+import com.estimote.indoorsdk_module.view.IndoorLocationView
 import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory
+import java.io.File
 
 import java.io.IOException
 import java.text.DecimalFormat
@@ -40,6 +45,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private lateinit var location: Location
     private lateinit var indoorLocationManager: ScanningIndoorLocationManager
     private lateinit var onPositionUpdateListener: OnPositionUpdateListener
+    private lateinit var indoorLocationView: IndoorLocationView
 
     private lateinit var locationPos : LocationPosition
     private var locationPosition_x = "0"
@@ -52,13 +58,16 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private lateinit var startStopButtonViewGroup: StartStopButtonViewGroup
     private lateinit var stopEngineButtonViewGroup: StopEngineButtonViewGroup
     private lateinit var changeGmsStatusViewGroup: ChangeGmsStatusViewGroup
+    private lateinit var stillButton: Button
     private val dcm = DecimalFormat("0.000000")
     private val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss")
     private val sdfTimeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS")
 
     private var startTime: Long = 0
     private var fileName: String? = null
+    private var directory: String = ""
     private lateinit var csvWriter: CsvWriter
+    private var isStill: Boolean = false
     private var isStopEngine: Boolean = false
     private var isChangeGmsStatus: Boolean = false
     private var timeStampAcce: Long = 0
@@ -98,11 +107,15 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         setupLocation()
         initInstances()
 
+        // Give location object to your view to draw it on your screen
+        indoorLocationView.setLocation(location)
+
         startStopButtonViewGroup.getBtnStart().setOnClickListener(this)
         startStopButtonViewGroup.btnStop.setOnClickListener(this)
         accelerometerDataViewGroup.btnEnter.setOnClickListener(this)
         stopEngineButtonViewGroup.btnStopEngine.setOnClickListener(this)
         changeGmsStatusViewGroup.btnChangeGmsStatus.setOnClickListener(this)
+        stillButton.setOnClickListener(this)
 
         Toast.makeText(this, "You can set listener sampling rate", Toast.LENGTH_SHORT).show()
 
@@ -121,13 +134,13 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
 
         onPositionUpdateListener = object : OnPositionUpdateListener {
             override fun onPositionOutsideLocation() {
-//                indoorLocationView.hidePosition()
+                indoorLocationView.hidePosition()
             }
 
             override fun onPositionUpdate(locationPosition: LocationPosition) {
                 /** code for updateing view**/
 //                println(" ================================================= in onPositionUpdate =====================================")
-//                indoorLocationView.updatePosition(locationPosition)
+                indoorLocationView.updatePosition(locationPosition)
 //                locationPos = locationPosition
                 locationPosition_x = locationPosition.x.toString()
                 locationPosition_y = locationPosition.y.toString()
@@ -167,6 +180,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         if (v === startStopButtonViewGroup.btnStop) {
             stopRecording()
             Toast.makeText(this, "Stop recording", Toast.LENGTH_SHORT).show()
+            isSaveFileSuccess()
         }
 
         if (v === accelerometerDataViewGroup.btnEnter) {
@@ -196,6 +210,24 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             Toast.makeText(this, "Change GMS status", Toast.LENGTH_SHORT).show()
         }
 
+        if (v === stillButton) {
+            isStill = true
+            Toast.makeText(this, "Still", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    fun isSaveFileSuccess(){
+        val fileDirectory = "BeaconSensorCsvFile"
+        val fileToGet = File(fileDirectory, fileName)
+
+        if(fileToGet != null){
+            Toast.makeText(this@CsvBeaconAcceDataActivity,
+                    "Save file SUCCESS", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this@CsvBeaconAcceDataActivity,
+                    "Save file FAILED", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun initInstances() {
@@ -206,6 +238,10 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         startStopButtonViewGroup = findViewById(R.id.startStopButtonViewGroup)
         stopEngineButtonViewGroup = findViewById(R.id.stopEngineButtonViewGroup)
         changeGmsStatusViewGroup = findViewById(R.id.changeGmsStatusViewGroup)
+        stillButton = findViewById(R.id.stillButton)
+
+        // Init indoor location view here
+        indoorLocationView = findViewById(R.id.indoor_view)
 
         csvWriter = CsvWriter()
         csvReader = CsvReader()
@@ -213,7 +249,10 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         isChangeGmsStatus = false
         isStopEngine = false
         isReadFinish = false
+        isStill = false
         fileName = null
+        directory = Environment.getExternalStorageDirectory().toString() +
+                    "/_Parka/BeaconSensorCsvFile"
 
 //        locationPos = LocationPosition()
     }
@@ -282,6 +321,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                     + acc_x_formatted + ","
                     + acc_y_formatted + ","
                     + acc_z_formatted + ","
+                    + isStill + ","
                     + isStopEngine  + ","
                     + locationPosition_x + ","
                     + locationPosition_y + ","
@@ -306,14 +346,13 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
                         "_sampling_" + listenerSampling +
                         "microsec.csv"
         println("File name = "+fileName)
-        val directory = Environment.getExternalStorageDirectory().toString() +
-                            "/_Parka/BeaconSensorCsvFile"
 
         csvWriter.createFile(fileName, directory)
         startTime = csvWriter.startTime
 
         val headFileStr = ("millisec" + "," + "timeStamp" + ","
                             + "acce_X" + "," + "acce_Y" + "," + "acce_Z" + ","
+                            + "is_still" + ","
                             + "is_stop_engine" + ","
                             + "x_position" + ","
                             + "y_position" + ","
@@ -333,6 +372,9 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         if (csvWriter.file != null) {
             csvWriter.closeFile()
             isReadFinish = false
+            isChangeGmsStatus = false
+            isStopEngine = false
+            isStill = false
         }
 
         if (isReadFinish != true) {
@@ -346,7 +388,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             }
 
             if (csvRows.size != 0) {
-                var i = 0
+                var i = 1
                 while (i < csvRows.size) {
                     Log.d("read from csv file",
                             String.format("row %s|%s: %s, %s, %s, %s, %s, %s, %s ,%s",
@@ -386,5 +428,4 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         isStopEngine = false
         isChangeGmsStatus = false
     }
-
 }
