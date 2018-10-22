@@ -19,8 +19,22 @@ import java.util.List;
 
 
 public class ReadFileSendDataActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button btnFileName1;
-    private Button btnFileName2;
+//    private Button btnFileName1;
+//    private Button btnFileName2;
+    private Button btnScenario1_1;
+    private Button btnScenario1_2;
+    private Button btnScenario1_3;
+    private Button btnScenario1_4;
+    private Button btnScenario2_1;
+    private Button btnScenario2_2;
+    private Button btnScenario3_1;
+    private Button btnScenario3_2;
+    private Button btnScenario4_1;
+    private Button btnScenario4_2;
+    private Button btnScenario5_1;
+    private Button btnScenario5_2;
+    private Button btnScenario6_1;
+    private Button btnScenario6_2;
     private String fileName;
     private CsvReader csvReader;
     private List<CsvRow> csvRows;
@@ -34,14 +48,44 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
         initInstances();
 
-        btnFileName1.setOnClickListener(this);
-        btnFileName2.setOnClickListener(this);
+//        btnFileName1.setOnClickListener(this);
+//        btnFileName2.setOnClickListener(this);
+
+        btnScenario1_1.setOnClickListener(this);
+        btnScenario1_2.setOnClickListener(this);
+        btnScenario1_3.setOnClickListener(this);
+        btnScenario1_4.setOnClickListener(this);
+        btnScenario2_1.setOnClickListener(this);
+        btnScenario2_2.setOnClickListener(this);
+        btnScenario3_1.setOnClickListener(this);
+        btnScenario3_2.setOnClickListener(this);
+        btnScenario4_1.setOnClickListener(this);
+        btnScenario4_2.setOnClickListener(this);
+        btnScenario5_1.setOnClickListener(this);
+        btnScenario5_2.setOnClickListener(this);
+        btnScenario6_1.setOnClickListener(this);
+        btnScenario6_2.setOnClickListener(this);
 
     }
 
     private void initInstances() {
-        btnFileName1 = findViewById(R.id.btnFileName1);
-        btnFileName2 = findViewById(R.id.btnFileName2);
+//        btnFileName1 = findViewById(R.id.btnFileName1);
+//        btnFileName2 = findViewById(R.id.btnFileName2);
+        btnScenario1_1 = findViewById(R.id.btnScenario1_1);
+        btnScenario1_2 = findViewById(R.id.btnScenario1_2);
+        btnScenario1_3 = findViewById(R.id.btnScenario1_3);
+        btnScenario1_4 = findViewById(R.id.btnScenario1_4);
+        btnScenario2_1 = findViewById(R.id.btnScenario2_1);
+        btnScenario2_2 = findViewById(R.id.btnScenario2_2);
+        btnScenario3_1 = findViewById(R.id.btnScenario3_1);
+        btnScenario3_2 = findViewById(R.id.btnScenario3_2);
+        btnScenario4_1 = findViewById(R.id.btnScenario4_1);
+        btnScenario4_2 = findViewById(R.id.btnScenario4_2);
+        btnScenario5_1 = findViewById(R.id.btnScenario5_1);
+        btnScenario5_2 = findViewById(R.id.btnScenario5_2);
+        btnScenario6_1 = findViewById(R.id.btnScenario6_1);
+        btnScenario6_2 = findViewById(R.id.btnScenario6_2);
+
         csvReader = new CsvReader();
         csvRows = new ArrayList<>();
 
@@ -53,15 +97,62 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View v) {
-        if(v == btnFileName1){
-            fileName = "BeaconAccelerometerData_2018-09-25_13_47_35_sampling_3microsec.csv";
-            rowToTrigger = 25;
-            int positionId = 322;
+//        if(v == btnFileName1){
+//            fileName = "BeaconAccelerometerData_2018-09-25_13_47_35_sampling_3microsec.csv";
+//            rowToTrigger = 25;
+//            int positionId = 322;
+//
+//            try {
+//                csvRows.clear();
+//                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+//                Log.d("ReadFileSendDataAct","file name 1 --> size: " +csvRows.size() );
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//            Bundle extra = new Bundle();
+//            extra.putSerializable("csvRows", (Serializable) csvRows);
+//
+//            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
+//        }
+//
+//        if(v == btnFileName2){
+//            fileName = "BeaconAccelerometerData_2018-09-25_13_41_04_sampling_3microsec.csv";
+//            rowToTrigger = 21;
+//            int positionId = 324;
+//
+//            try {
+//                csvRows.clear();
+//                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+//                Log.d("ReadFileSendDataAct","file name 2 --> size: " +csvRows.size() );
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//            Bundle extra = new Bundle();
+//            extra.putSerializable("csvRows", (Serializable) csvRows);
+//
+//            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
+//        }
+
+
+/** แก้โค้ด row to trigger ใน อันนี้ กับ ใน ShowCsvDataActivity
+ * อย่าลืมใส่ชื่อไฟล์ด้วย **/
+        if(v == btnScenario1_1){
+            fileName = "BeaconAccelerometerData_2018-10-17_13:17:29_sampling_3microsec.csv";
+//            rowToTrigger = 21;
+            int positionId = 328;
 
             try {
                 csvRows.clear();
                 csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
-                Log.d("ReadFileSendDataAct","file name 1 --> size: " +csvRows.size() );
+                Log.d("ReadFileSendDataAct","btnScenario1_1 --> size: " +csvRows.size() );
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
@@ -74,15 +165,101 @@ public class ReadFileSendDataActivity extends AppCompatActivity implements View.
             startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
         }
 
-        if(v == btnFileName2){
-            fileName = "BeaconAccelerometerData_2018-09-25_13_41_04_sampling_3microsec.csv";
-            rowToTrigger = 21;
-            int positionId = 324;
+        /** แก้โค้ด row to trigger ใน อันนี้ กับ ใน ShowCsvDataActivity
+         * อย่าลืมใส่ชื่อไฟล์ด้วย **/
+
+        if(v == btnScenario1_2){
+            fileName = "-------------------------------------------------------------";
+            int positionId = 328;
 
             try {
                 csvRows.clear();
                 csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
-                Log.d("ReadFileSendDataAct","file name 2 --> size: " +csvRows.size() );
+                Log.d("ReadFileSendDataAct","btnScenario1_2 --> size: " +csvRows.size() );
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Bundle extra = new Bundle();
+            extra.putSerializable("csvRows", (Serializable) csvRows);
+
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
+        }
+
+        if(v == btnScenario1_3){
+            fileName = "--------------------------------------------------";
+            int positionId = 328;
+
+            try {
+                csvRows.clear();
+                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+                Log.d("ReadFileSendDataAct","btnScenario1_3 --> size: " +csvRows.size() );
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Bundle extra = new Bundle();
+            extra.putSerializable("csvRows", (Serializable) csvRows);
+
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
+        }
+
+        if(v == btnScenario1_4){
+            fileName = "--------------------------------------------------";
+            int positionId = 328;
+
+            try {
+                csvRows.clear();
+                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+                Log.d("ReadFileSendDataAct","btnScenario1_4 --> size: " +csvRows.size() );
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Bundle extra = new Bundle();
+            extra.putSerializable("csvRows", (Serializable) csvRows);
+
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
+        }
+
+        if(v == btnScenario2_1){
+            fileName = "--------------------------------------------------";
+            int positionId = 329;
+
+            try {
+                csvRows.clear();
+                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+                Log.d("ReadFileSendDataAct","btnScenario2_1 --> size: " +csvRows.size() );
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Bundle extra = new Bundle();
+            extra.putSerializable("csvRows", (Serializable) csvRows);
+
+            startShowCsvDataActivity(extra,rowToTrigger,fcmToken,positionId);
+        }
+
+        if(v == btnScenario2_2){
+            fileName = "--------------------------------------------------";
+            int positionId = 329;
+
+            try {
+                csvRows.clear();
+                csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+                Log.d("ReadFileSendDataAct","btnScenario2_2 --> size: " +csvRows.size() );
 
             } catch (IOException e) {
                 e.printStackTrace();

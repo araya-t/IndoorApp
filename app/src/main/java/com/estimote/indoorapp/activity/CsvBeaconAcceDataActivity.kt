@@ -58,8 +58,11 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private lateinit var startStopButtonViewGroup: StartStopButtonViewGroup
     private lateinit var stopEngineButtonViewGroup: StopEngineButtonViewGroup
     private lateinit var changeGmsStatusViewGroup: ChangeGmsStatusViewGroup
+    private lateinit var tvX_position: TextView
+    private lateinit var tvY_position: TextView
     private lateinit var stillButton: Button
     private val dcm = DecimalFormat("0.000000")
+    private val dcmBeacon = DecimalFormat("0.0000")
     private val sdf = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss")
     private val sdfTimeStamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS")
 
@@ -238,6 +241,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         startStopButtonViewGroup = findViewById(R.id.startStopButtonViewGroup)
         stopEngineButtonViewGroup = findViewById(R.id.stopEngineButtonViewGroup)
         changeGmsStatusViewGroup = findViewById(R.id.changeGmsStatusViewGroup)
+        tvX_position = findViewById(R.id.tvX_position)
+        tvY_position = findViewById(R.id.tvY_position)
         stillButton = findViewById(R.id.stillButton)
 
         // Init indoor location view here
@@ -246,6 +251,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         csvWriter = CsvWriter()
         csvReader = CsvReader()
 
+        locationPosition_x = "0"
+        locationPosition_y = "0"
         isChangeGmsStatus = false
         isStopEngine = false
         isReadFinish = false
@@ -305,9 +312,14 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             timeStampAcce = System.currentTimeMillis()
 
 
+
+
             accelerometerDataViewGroup.setTvAccel_x_text("X : " + acc_x_formatted)
             accelerometerDataViewGroup.setTvAccel_y_text("Y : " + acc_y_formatted)
             accelerometerDataViewGroup.setTvAccel_z_text("Z : " + acc_z_formatted)
+
+            tvX_position.setText("Beacon: (" + dcmBeacon.format( java.lang.Double.parseDouble(locationPosition_x) ) + ",")
+            tvY_position.setText(dcmBeacon.format( java.lang.Double.parseDouble(locationPosition_x) ) + ")")
 
             Log.i("Write Sensor Data",
                     "AcceData: (" + milliSecAcce + ") " +
@@ -334,7 +346,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         }
 
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-
+            Log.i("onAccuracyChanged"," -------> accuracy = " + accuracy)
         }
     }
 

@@ -39,13 +39,32 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <com.estimote.indoorapp.view.StartStopButtonViewGroup
                 android:id="@+id/startStopButtonViewGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </com.estimote.indoorapp.view.StartStopButtonViewGroup>
+
+            <TextView
+                android:id="@+id/tvX_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beacon: x=0.0000"
+                android:layout_marginLeft="5dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvY_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/y=0.0000"
+                android:layout_marginLeft="5dp"
+                android:textSize="15sp" />
+
+
 
 
         </LinearLayout>

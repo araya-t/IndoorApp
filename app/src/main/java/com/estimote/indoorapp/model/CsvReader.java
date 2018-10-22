@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CsvReader {
     private List<CsvRow> csvRows;
-    private String fileDirectory = "BeaconSensorCsvFile/Midterm"; //default directory
+    private String fileDirectory = "BeaconSensorCsvFile"; //default directory
     SimpleDateFormat sdfTimeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSSSSS");
     private int countRow = 0;
 
@@ -47,7 +47,9 @@ public class CsvReader {
             String acce_x = row[2];
             String acce_y = row[3];
             String acce_z = row[4];
-            String is_still = row[5];
+/** read old file doesn't have is_still.**/
+//            String is_still = row[5];
+            String is_still = null;
             String is_stop_engine = row[6];
             String x_position = row[7];
             String y_position = row[8];
@@ -72,7 +74,12 @@ public class CsvReader {
         String line;
         String csvSplitBy = ",";
 
-        bufferedReader.readLine();
+        if(bufferedReader != null){
+            bufferedReader.readLine();
+        }else{
+            Log.d("readCSV"," File is null ");
+        }
+
 
         while ((line = bufferedReader.readLine()) != null) {
             String[] row = line.split(csvSplitBy);
@@ -84,11 +91,13 @@ public class CsvReader {
             String acce_x = row[2];
             String acce_y = row[3];
             String acce_z = row[4];
-            String is_still = row[5];
-            String is_stop_engine = row[6];
-            String x_position = row[7];
-            String y_position = row[8];
-            String isChangeGmsStatus = row[9];
+/** read old file doesn't have is_still.**/
+            String is_still = null;
+            String is_stop_engine = row[5];
+            String x_position = row[6];
+            String y_position = row[7];
+            String isChangeGmsStatus = row[8];
+
 
             CsvRow csvRow = new CsvRow(++countRow,millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,is_still,
                     is_stop_engine,x_position,y_position,isChangeGmsStatus);

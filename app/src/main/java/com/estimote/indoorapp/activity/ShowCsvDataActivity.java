@@ -44,8 +44,8 @@ public class ShowCsvDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_csv_data);
         initInstances();
 
-        Log.d("ShowCsvDataActivity", "csvRows size = " + csvRows.size());
-        Log.d("ShowCsvDataActivity", "rowToTrigger = " + rowToTrigger);
+//        Log.d("ShowCsvDataActivity", "csvRows size = " + csvRows.size());
+//        Log.d("ShowCsvDataActivity", "rowToTrigger = " + rowToTrigger);
 
         if (csvRows.size() != 0) {
             int i = 0;
@@ -53,8 +53,9 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                 Log.d("ShowCsvDataActivity", "csvRows size = " + csvRows.size());
 
                 //if value of 'csvRows.get(i).getCountRow()' == true --> send trigger to GMS
-                if (csvRows.get(i).getCountRow() == rowToTrigger && !is_triggered) {
-                    System.out.println("{10}getCountRow(" + csvRows.get(i).getCountRow() + ") = rowToTrigger");
+                if (csvRows.get(i).isChangeGmsStatus() && !is_triggered) {
+                    Log.d("sendDataTrigger",
+                            "Row that trigger --> (" + csvRows.get(i).getCountRow() + ") isChangeGmsStatus = true");
                     is_triggered = true;
 
                     //set data to send

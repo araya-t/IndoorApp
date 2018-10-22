@@ -146,6 +146,22 @@ public class CsvRow implements Parcelable {
         this.y_position = y_position;
     }
 
+    public boolean is_still() {
+        return is_still;
+    }
+
+    public void setIs_still(boolean is_still) {
+        this.is_still = is_still;
+    }
+
+    public boolean isChangeGmsStatus() {
+        return isChangeGmsStatus;
+    }
+
+    public void setChangeGmsStatus(boolean changeGmsStatus) {
+        isChangeGmsStatus = changeGmsStatus;
+    }
+
     @Override
     public String toString() {
         return "CsvRow{" +
@@ -193,8 +209,11 @@ public class CsvRow implements Parcelable {
         dest.writeDouble(acce_x);
         dest.writeDouble(acce_y);
         dest.writeDouble(acce_z);
+        dest.writeByte((byte) (is_still ? 1 : 0));
         dest.writeByte((byte) (is_stop_engine ? 1 : 0));
         dest.writeDouble(x_position);
         dest.writeDouble(y_position);
+        dest.writeByte((byte) (isChangeGmsStatus ? 1 : 0));
+
     }
 }
