@@ -48,8 +48,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
     private lateinit var indoorLocationView: IndoorLocationView
 
     private lateinit var locationPos : LocationPosition
-    private var locationPosition_x = "0"
-    private var locationPosition_y = "0"
+    private var locationPosition_x:Double = 0.0
+    private var locationPosition_y:Double = 0.0
     private var num = 1;
 
     private var sensorManager: SensorManager? = null
@@ -145,8 +145,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
 //                println(" ================================================= in onPositionUpdate =====================================")
                 indoorLocationView.updatePosition(locationPosition)
 //                locationPos = locationPosition
-                locationPosition_x = locationPosition.x.toString()
-                locationPosition_y = locationPosition.y.toString()
+                locationPosition_x = locationPosition.x + 17
+                locationPosition_y = locationPosition.y
 
 //                Log.i("Position",
 //                        "(" + num++ + ") timestamp(" + System.currentTimeMillis()
@@ -251,8 +251,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
         csvWriter = CsvWriter()
         csvReader = CsvReader()
 
-        locationPosition_x = "0"
-        locationPosition_y = "0"
+        locationPosition_x = 0.0
+        locationPosition_y = 0.0
         isChangeGmsStatus = false
         isStopEngine = false
         isReadFinish = false
@@ -318,8 +318,8 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             accelerometerDataViewGroup.setTvAccel_y_text("Y : " + acc_y_formatted)
             accelerometerDataViewGroup.setTvAccel_z_text("Z : " + acc_z_formatted)
 
-            tvX_position.setText("Beacon: (" + dcmBeacon.format( java.lang.Double.parseDouble(locationPosition_x) ) + ",")
-            tvY_position.setText(dcmBeacon.format( java.lang.Double.parseDouble(locationPosition_x) ) + ")")
+            tvX_position.setText(dcmBeacon.format(locationPosition_x))
+            tvY_position.setText(dcmBeacon.format(locationPosition_y))
 
             Log.i("Write Sensor Data",
                     "AcceData: (" + milliSecAcce + ") " +
@@ -393,7 +393,7 @@ class CsvBeaconAcceDataActivity : AppCompatActivity() , View.OnClickListener {
             var csvRows: MutableList<CsvRow> = ArrayList()
             try {
                 if (fileName != null) {
-                    csvRows = csvReader.readCSV("BeaconSensorCsvFile/",fileName);
+                    csvRows = csvReader.readCsv("BeaconSensorCsvFile/",fileName);
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

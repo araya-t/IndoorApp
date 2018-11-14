@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.estimote.indoorapp.adapter.CsvRowListAdapter;
+import com.estimote.indoorapp.dao.CarPositionCollection;
 import com.estimote.indoorapp.manager.Contextor;
 import com.estimote.indoorapp.manager.HttpManager;
 import com.estimote.indoorapp.utils.CsvRow;
@@ -59,10 +60,10 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                     is_triggered = true;
 
                     //set data to send
-                    String is_available = "False";
+//                    String is_available = "False";
                     Call<Void> callGMS = HttpManager.getInstance()
                             .getServiceGMS().changeStatus
-                                    (positionId, is_available);
+                                    (positionId);
                     Log.d("sendDataTrigger"," position id = " + positionId);
 
                     //call GMS server
@@ -118,7 +119,7 @@ public class ShowCsvDataActivity extends AppCompatActivity {
 
 
                     //set data to send for processing position that user parked
-                    Call<CarPosition> callParka = HttpManager.getInstance()
+                    Call<CarPositionCollection> callParka = HttpManager.getInstance()
                             .getServiceParka()
                             .sendXYPosition(
                                     userToken
@@ -131,9 +132,9 @@ public class ShowCsvDataActivity extends AppCompatActivity {
 
 
                     //call Parka server
-                    callParka.enqueue(new Callback<CarPosition>() {
+                    callParka.enqueue(new Callback<CarPositionCollection>() {
                         @Override
-                        public void onResponse(retrofit2.Call<CarPosition> call, Response<CarPosition> response) {
+                        public void onResponse(Call<CarPositionCollection> call, Response<CarPositionCollection> response) {
                             if (response.isSuccessful()) {
                                 Log.d("responseSuccess", "Send data to 'Parka' ==> SUCCESS");
 
@@ -147,21 +148,21 @@ public class ShowCsvDataActivity extends AppCompatActivity {
                                         + "\n 'Failed' response.message() -----> " + response.message());
 
                                 toast = Toast.makeText(
-                                            ShowCsvDataActivity.this,
+                                        ShowCsvDataActivity.this,
                                         response.message(),
-                                            Toast.LENGTH_SHORT);
+                                        Toast.LENGTH_SHORT);
                                 showFailedToast();
                             }
                         }
 
                         @Override
-                        public void onFailure(retrofit2.Call<CarPosition> call, Throwable t) {
+                        public void onFailure(Call<CarPositionCollection> call, Throwable t) {
                             Log.d("responseSuccess","Failed Error message is " + t);
 
                             toast = Toast.makeText(
-                                        ShowCsvDataActivity.this,
-                                        "Can not contact Server ==> FAILED \n"+t.toString(),
-                                        Toast.LENGTH_SHORT);
+                                    ShowCsvDataActivity.this,
+                                    "Can not contact Server ==> FAILED \n"+t.toString(),
+                                    Toast.LENGTH_SHORT);
                             showFailedToast();
                         }
                     });

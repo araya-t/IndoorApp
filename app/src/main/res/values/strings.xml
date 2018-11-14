@@ -20,5 +20,7 @@
     <string name="btn_beacon_acc_csv">Beacon Accelerometer CSV file</string>
     <string name="btn_read_send_data">Read file and send data</string>
     <string name="btn_change_gms_status">Change GMS</string>
+    <string name="btn_car_detection">Car Dectection</string>
+
 
 </resources>

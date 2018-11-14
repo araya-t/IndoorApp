@@ -11,6 +11,13 @@ public interface ApiServiceGMS {
     //send trigger to GMS to change the status of parking slot
     @FormUrlEncoded
     @PUT("positions/{position_id}/parking")
-    Call<Void> changeStatus(@Path("position_id") int position_id,
+    Call<Void> changeStatusOldVersion(@Path("position_id") int position_id,
                             @Field("is_available") String is_available);
+
+
+    //send trigger to GMS to change the status of parking slot
+    // without sending is_available
+
+    @PUT("positions/{position_id}/parking")
+    Call<Void> changeStatus(@Path("position_id") int position_id);
 }

@@ -27,7 +27,44 @@ public class CsvReader {
         csvRows = new ArrayList<>();
     }
 
-    public List<CsvRow> readCSV(String fileName) throws IOException, ParseException {
+    public List<CsvRow> readCsv(String fileName) throws IOException, ParseException {
+        String fileDirectory = getFileDirectory(this.fileDirectory);
+        File fileToGet = new File(fileDirectory, fileName);
+
+        BufferedReader bufferedReader = getBufferedReader(fileToGet);
+        String line;
+        String csvSplitBy = ",";
+
+        bufferedReader.readLine();
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] row = line.split(csvSplitBy);
+
+            String millisec = row[0];
+            Date dateTimeStamp = sdfTimeStamp.parse(row[1]);
+            String timeStamp = sdfTimeStamp.format(dateTimeStamp);
+            long timeStampLong = dateTimeStamp.getTime();
+            String acce_x = row[2];
+            String acce_y = row[3];
+            String acce_z = row[4];
+            String is_still = row[5];
+            String is_stop_engine = row[6];
+            String x_position = row[7];
+            String y_position = row[8];
+            String isChangeGmsStatus = row[9];
+
+            CsvRow csvRow = new CsvRow(++countRow,millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,is_still,
+                    is_stop_engine,x_position,y_position,isChangeGmsStatus);
+            csvRows.add(csvRow);
+        }
+
+        bufferedReader.close();
+        countRow = 1;
+
+        return csvRows;
+    }
+
+    public List<CsvRow> readCsvOldVersion(String fileName) throws IOException, ParseException {
         String fileDirectory = getFileDirectory(this.fileDirectory);
         File fileToGet = new File(fileDirectory, fileName);
 
@@ -48,7 +85,6 @@ public class CsvReader {
             String acce_y = row[3];
             String acce_z = row[4];
 /** read old file doesn't have is_still.**/
-//            String is_still = row[5];
             String is_still = null;
             String is_stop_engine = row[6];
             String x_position = row[7];
@@ -66,7 +102,50 @@ public class CsvReader {
         return csvRows;
     }
 
-    public List<CsvRow> readCSV(String directory, String fileName) throws IOException, ParseException {
+    public List<CsvRow> readCsv(String directory, String fileName) throws IOException, ParseException {
+        String fileDirectory = getFileDirectory(directory);
+        File fileToGet = new File(fileDirectory, fileName);
+
+        BufferedReader bufferedReader = getBufferedReader(fileToGet);
+        String line;
+        String csvSplitBy = ",";
+
+        if(bufferedReader != null){
+            bufferedReader.readLine();
+        }else{
+            Log.d("readCSV"," File is null ");
+        }
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] row = line.split(csvSplitBy);
+
+            String millisec = row[0];
+            Date dateTimeStamp = sdfTimeStamp.parse(row[1]);
+            String timeStamp = sdfTimeStamp.format(dateTimeStamp);
+            long timeStampLong = dateTimeStamp.getTime();
+            String acce_x = row[2];
+            String acce_y = row[3];
+            String acce_z = row[4];
+            String is_still = row[5];
+            String is_stop_engine = row[6];
+            String x_position = row[7];
+            String y_position = row[8];
+            String isChangeGmsStatus = row[9];
+
+
+            CsvRow csvRow = new CsvRow(++countRow,millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,is_still,
+                    is_stop_engine,x_position,y_position,isChangeGmsStatus);
+
+            csvRows.add(csvRow);
+        }
+
+        bufferedReader.close();
+        countRow = 1;
+
+        return csvRows;
+    }
+
+    public List<CsvRow> readCsvOldVersion(String directory, String fileName) throws IOException, ParseException {
         String fileDirectory = getFileDirectory(directory);
         File fileToGet = new File(fileDirectory, fileName);
 
@@ -97,7 +176,6 @@ public class CsvReader {
             String x_position = row[6];
             String y_position = row[7];
             String isChangeGmsStatus = row[8];
-
 
             CsvRow csvRow = new CsvRow(++countRow,millisec,timeStamp,timeStampLong,acce_x,acce_y,acce_z,is_still,
                     is_stop_engine,x_position,y_position,isChangeGmsStatus);

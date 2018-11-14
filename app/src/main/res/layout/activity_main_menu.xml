@@ -31,6 +31,24 @@
             android:textSize="17sp"
             android:text="@string/btn_read_send_data"/>
 
+        <Button
+            android:id="@+id/btnCarDetection"
+            android:layout_width="250dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:text="@string/btn_car_detection"/>
+
+        <Button
+            android:id="@+id/btnRealSituation"
+            android:layout_width="250dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:text="For Real Situation"/>
+
 
     </LinearLayout>
 

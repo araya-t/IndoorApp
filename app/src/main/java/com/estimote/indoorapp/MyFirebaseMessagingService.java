@@ -61,6 +61,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Log.d("getFrom", "From: "+remoteMessage.getFrom());
 
+        // receive from server
         if (remoteMessage.getData() != null){
             if (remoteMessage.getData().size() > 0){
                 for (String k : remoteMessage.getData().keySet()){

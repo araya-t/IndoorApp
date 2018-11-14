@@ -45,7 +45,7 @@ class FetchCloudDataActivity : AppCompatActivity() {
                     }
 
                     //Get new instance ID token
-                    fcmToken = task.result.token
+                    fcmToken = task.result!!.token
                     Toast.makeText(this@FetchCloudDataActivity, "getInstanceId Token: $fcmToken", Toast.LENGTH_LONG).show()
                     Log.d("TagToken", "token: $fcmToken")
 

@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-feature android:name="android.hardware.bluetooth" />
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
@@ -43,7 +44,9 @@
 
         <activity android:name=".activity.MainMenuActivity" />
         <activity android:name=".activity.ReadFileSendDataActivity" />
-        <activity android:name=".activity.ShowCsvDataActivity"></activity>
+        <activity android:name=".activity.ShowCsvDataActivity" />
+        <activity android:name=".activity.CarDetectionActivity" />
+        <activity android:name=".activity.RealSituationActivity"></activity>
     </application>
 
 </manifest>
