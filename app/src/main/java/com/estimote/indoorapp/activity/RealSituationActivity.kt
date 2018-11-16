@@ -95,7 +95,8 @@ class RealSituationActivity : AppCompatActivity() , View.OnClickListener {
     private var csvRowRealSituation = emptyList<CsvRow>().toMutableList()
     internal var countIsStill = 0
     internal var countIsStopEngine = 0
-    internal var previousCountRow = 0
+    internal var previousCountRowStill = 0
+    internal var previousCountRowStop = 0
     internal var isFirstValueStill = true
     internal var isFirstValueStop = true
     internal var isCarStopped = false
@@ -497,40 +498,137 @@ class RealSituationActivity : AppCompatActivity() , View.OnClickListener {
         }
     }
 
+//    private fun checkIsCarStillStop(differentValueX: Double, differentValueY: Double, differentValueZ: Double, currentCountRow: Int, csvRow: CsvRow) {
+//        // currentCountRow value - previous value
+//        // The main variable that we will use is acce_x and acce_y
+//        // initial value of previousAcceX, previousAcceY, previousAcceZ = 1
+//
+//        /** Check whether car is stopped or not**/
+//        if (differentValueX < 0.05 && differentValueY < 0.05) {
+//
+//            Log.d("differentValue", "differentValueX: $differentValueX || differentValueY: $differentValueY")
+//            Log.d("CarIsStop", "-----------> Row $countIndex | car IS STOPPPP")
+//
+//            if (isFirstValueStop) {
+//                countIsStopEngine++
+//                csvRowsForCheckStop.add(csvRow)
+//                isFirstValueStop = false
+//                previousCountRowStop = currentCountRow
+//                Log.d("checkIsCarStillStop", " row($currentCountRow)------------- countIsStop ($countIsStopEngine) Value -------------")
+//
+//                //                Log.d("checkIsCarStill", "------------- First Value -------------");
+//
+//            } else {
+//
+//                Log.d("previousCountRow", "currentCountRow - previousCountRowStop = " + (currentCountRow - previousCountRowStop))
+//
+//                if (currentCountRow - previousCountRowStop == 1) {
+//                    countIsStopEngine++
+//                    csvRowsForCheckStop.add(csvRow)
+//                    previousCountRowStop = currentCountRow
+//
+//                    Log.d("checkIsCarStillStop", " row($currentCountRow)------------- countIsStopEngine ($countIsStopEngine) Value -------------")
+//
+//                } else {
+//                    csvRowsForCheckStop.clear()
+//                    countIsStopEngine = 0
+//                    previousCountRowStop = 0
+//                    isFirstValueStop = true
+//                }
+//
+//            }
+//
+//            if (countIsStopEngine >= 16) {
+//                isCarStopped = true
+//                Toast.makeText(this, "-- The car is STOPPPP --", Toast.LENGTH_SHORT).show()
+//                Log.d("checkIsCarStillStop", "--------------- The car is STOP ---------------")
+//
+//            }
+//
+//
+//
+//
+//
+//
+//
+//        /** Check whether car is still or not**/
+//        } else if (differentValueX < 0.15 && differentValueY < 0.15) {
+//
+//            Log.d("differentValue", "differentValueX: $differentValueX || differentValueY: $differentValueY")
+//            Log.d("CarIsStill", "-----------> Row $countIndex | car IS STILL")
+//
+//            if (isFirstValueStill) {
+//                countIsStill++
+//                csvRowsForCheckStill.add(csvRow)
+//                isFirstValueStill = false
+//                previousCountRowStill = currentCountRow
+//                Log.d("checkIsCarStillStop", " row($currentCountRow)------------- countIsStill ($countIsStill) Value -------------")
+//
+////                Log.d("checkIsCarStill", "------------- First Value -------------");
+//            } else {
+//
+//                Log.d("previousCountRow", "currentCountRow - previousCountRowStill = " + (currentCountRow - previousCountRowStill))
+//
+//                if (currentCountRow - previousCountRowStill == 1) {
+//                    countIsStill++
+//                    csvRowsForCheckStill.add(csvRow)
+//                    previousCountRowStill = currentCountRow
+//
+//                    Log.d("checkIsCarStillStop", " row($currentCountRow)------------- countIsStill ($countIsStill) Value -------------")
+//
+//                } else {
+//                    csvRowsForCheckStill.clear()
+//                    countIsStill = 0
+//                    previousCountRowStill = 0
+//                    isFirstValueStill = true
+//                }
+//
+//            }
+//
+//            if (countIsStill >= 16) {
+//                Toast.makeText(this, "-- The car is STILL --", Toast.LENGTH_SHORT).show()
+//                Log.d("checkIsCarStillStop", "--------------- The car is STILL ---------------")
+//
+//            }
+//        }
+//
+//    }
+
     private fun checkIsCarStillStop(differentValueX: Double, differentValueY: Double, differentValueZ: Double, currentCountRow: Int, csvRow: CsvRow) {
         // currentCountRow value - previous value
         // The main variable that we will use is acce_x and acce_y
         // initial value of previousAcceX, previousAcceY, previousAcceZ = 1
 
-        /** Check whether car is stopped or not**/
+        /** Check whether car is stopped or not */
         if (differentValueX < 0.05 && differentValueY < 0.05) {
 
             Log.d("differentValue", "differentValueX: $differentValueX || differentValueY: $differentValueY")
-            Log.d("CarIsStop", "-----------> Row $countIndex | car IS STILL")
+            Log.d("CarIsStop", "-----------> Row $$countIndex | car IS STOPPP")
 
             if (isFirstValueStop) {
                 countIsStopEngine++
                 csvRowsForCheckStop.add(csvRow)
                 isFirstValueStop = false
-                previousCountRow = currentCountRow
+                previousCountRowStop = currentCountRow
 
                 //                Log.d("checkIsCarStill", "------------- First Value -------------");
 
             } else {
 
-                Log.d("previousCountRow", "currentCountRow - previousCountRow = " + (currentCountRow - previousCountRow))
+                Log.d("previousCountRow", "currentCountRow - previousCountRowStop = " + (currentCountRow - previousCountRowStop))
 
-                if (currentCountRow - previousCountRow == 1) {
+                if (currentCountRow - previousCountRowStop == 1) {
                     countIsStopEngine++
                     csvRowsForCheckStop.add(csvRow)
-                    previousCountRow = currentCountRow
+                    previousCountRowStop = currentCountRow
 
-                    Log.d("checkIsCarStillStop", " row($currentCountRow)------------- countIsStopEngine ($countIsStopEngine) Value -------------")
+                    Log.d("checkIsCarStillStop", " row(" + currentCountRow
+                            + ")------------- (" + differentValueX + ", " + differentValueY + " )countIsStopEngine (" + countIsStopEngine + ") Value -------------")
 
                 } else {
                     csvRowsForCheckStop.clear()
                     countIsStopEngine = 0
-                    previousCountRow = 0
+                    previousCountRowStop = 0
                     isFirstValueStop = true
                 }
 
@@ -538,13 +636,13 @@ class RealSituationActivity : AppCompatActivity() , View.OnClickListener {
 
             if (countIsStopEngine == 16 && isCarStopped == false) {
                 isCarStopped = true
-                Toast.makeText(this, "-- Have you parked your car? --", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "-- The car is STOP --", Toast.LENGTH_SHORT).show()
                 Log.d("checkIsCarStillStop", "--------------- The car is STOP ---------------")
 
             }
 
 
-        /** Check whether car is still or not**/
+            /** Check whether car is still or not */
         } else if (differentValueX < 0.15 && differentValueY < 0.15) {
 
             Log.d("differentValue", "differentValueX: $differentValueX || differentValueY: $differentValueY")
@@ -554,23 +652,24 @@ class RealSituationActivity : AppCompatActivity() , View.OnClickListener {
                 countIsStill++
                 csvRowsForCheckStill.add(csvRow)
                 isFirstValueStill = false
-                previousCountRow = currentCountRow
+                previousCountRowStill = currentCountRow
                 //                Log.d("checkIsCarStill", "------------- First Value -------------");
             } else {
 
-                Log.d("previousCountRow", "currentCountRow - previousCountRow = " + (currentCountRow - previousCountRow))
+                Log.d("previousCountRow", "currentCountRow - previousCountRow = " + (currentCountRow - previousCountRowStill))
 
-                if (currentCountRow - previousCountRow == 1) {
+                if (currentCountRow - previousCountRowStill <= 2) {
                     countIsStill++
                     csvRowsForCheckStill.add(csvRow)
-                    previousCountRow = currentCountRow
+                    previousCountRowStill = currentCountRow
 
-                    Log.d("checkIsCarStillStop", " row($currentCountRow)------------- countIsStill ($countIsStill) Value -------------")
-
+                    //                    Log.d("checkIsCarStillStop", " row(" + currentCountRow + ")------------- countIsStill (" + countIsStill + ") Value -------------");
+                    Log.d("checkIsCarStillStop", " row(" + currentCountRow
+                            + ")------------- (" + differentValueX + ", " + differentValueY + " )countIsStill (" + countIsStill + ") Value -------------")
                 } else {
                     csvRowsForCheckStill.clear()
                     countIsStill = 0
-                    previousCountRow = 0
+                    previousCountRowStill = 0
                     isFirstValueStill = true
                 }
 

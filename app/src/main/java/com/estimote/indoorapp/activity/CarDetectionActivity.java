@@ -43,6 +43,8 @@ public class CarDetectionActivity extends AppCompatActivity implements View.OnCl
     int countIsStill = 0;
     int countIsStopEngine = 0;
     int previousCountRow = 0;
+    int previousCountRowStill = 0;
+    int previousCountRowStop = 0;
     boolean isFirstValueStill = true;
     boolean isFirstValueStop = true;
     boolean isCarStopped = false;
@@ -220,34 +222,36 @@ public class CarDetectionActivity extends AppCompatActivity implements View.OnCl
         // The main variable that we will use is acce_x and acce_y
         // initial value of previousAcceX, previousAcceY, previousAcceZ = 1
 
+        /** Check whether car is stopped or not**/
         if (differentValueX < 0.05 && differentValueY < 0.05) {
 
             Log.d("differentValue", "differentValueX: " + differentValueX + " || differentValueY: " + differentValueY);
-            Log.d("CarIsStop", "-----------> Row " + countRow + " | car IS STILL");
+            Log.d("CarIsStop", "-----------> Row " + countRow + " | car IS STOPPP");
 
             if (isFirstValueStop) {
                 countIsStopEngine++;
                 csvRowsForCheckAcce.add(csvRow);
                 isFirstValueStop = false;
-                previousCountRow = currentCountRow;
+                previousCountRowStop = currentCountRow;
 
 //                Log.d("checkIsCarStill", "------------- First Value -------------");
 
             }else{
 
-                Log.d("previousCountRow", "currentCountRow - previousCountRow = " + (currentCountRow - previousCountRow));
+                Log.d("previousCountRow", "currentCountRow - previousCountRowStop = " + (currentCountRow - previousCountRowStop));
 
-                if (currentCountRow - previousCountRow == 1) {
+                if (currentCountRow - previousCountRowStop == 1) {
                     countIsStopEngine++;
                     csvRowsForCheckAcce.add(csvRow);
-                    previousCountRow = currentCountRow;
+                    previousCountRowStop = currentCountRow;
 
-                    Log.d("checkIsCarStillStop", " row(" + currentCountRow + ")------------- countIsStopEngine (" + countIsStopEngine + ") Value -------------");
+                    Log.d("checkIsCarStillStop", " row(" + currentCountRow
+                            + ")------------- ("+ differentValueX + ", " + differentValueY + " )countIsStopEngine (" + countIsStopEngine + ") Value -------------");
 
                 } else {
                     csvRowsForCheckAcce.clear();
                     countIsStopEngine = 0;
-                    previousCountRow = 0;
+                    previousCountRowStop = 0;
                     isFirstValueStop = true;
                 }
 
@@ -260,6 +264,9 @@ public class CarDetectionActivity extends AppCompatActivity implements View.OnCl
 
             }
 
+
+
+        /** Check whether car is still or not**/
         }else if (differentValueX < 0.15 && differentValueY < 0.15) {
 
             Log.d("differentValue", "differentValueX: " + differentValueX + " || differentValueY: " + differentValueY);
@@ -269,23 +276,24 @@ public class CarDetectionActivity extends AppCompatActivity implements View.OnCl
                 countIsStill++;
                 csvRowsForCheckAcce.add(csvRow);
                 isFirstValueStill = false;
-                previousCountRow = currentCountRow;
+                previousCountRowStill = currentCountRow;
 //                Log.d("checkIsCarStill", "------------- First Value -------------");
             }else{
 
-                Log.d("previousCountRow", "currentCountRow - previousCountRow = " + (currentCountRow - previousCountRow));
+                Log.d("previousCountRow", "currentCountRow - previousCountRow = " + (currentCountRow - previousCountRowStill));
 
-                if (currentCountRow - previousCountRow == 1) {
+                if (currentCountRow - previousCountRowStill <= 2) {
                     countIsStill++;
                     csvRowsForCheckAcce.add(csvRow);
-                    previousCountRow = currentCountRow;
+                    previousCountRowStill = currentCountRow;
 
-                    Log.d("checkIsCarStillStop", " row(" + currentCountRow + ")------------- countIsStill (" + countIsStill + ") Value -------------");
-
+//                    Log.d("checkIsCarStillStop", " row(" + currentCountRow + ")------------- countIsStill (" + countIsStill + ") Value -------------");
+                    Log.d("checkIsCarStillStop", " row(" + currentCountRow
+                            + ")------------- ("+ differentValueX + ", " + differentValueY + " )countIsStill (" + countIsStill + ") Value -------------");
                 } else {
                     csvRowsForCheckAcce.clear();
                     countIsStill = 0;
-                    previousCountRow = 0;
+                    previousCountRowStill = 0;
                     isFirstValueStill = true;
                 }
 
